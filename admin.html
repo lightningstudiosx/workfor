@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin · Work for kai.fun</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f6f1e7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lilita+One&display=swap" rel="stylesheet">
+<style>
+:root { --ink: #1b1530; --paper: #f6f1e7; --muted: #6f6680; --coral: #ff6b5e; --sun: #ffc93c; --teal: #1fb5a3; --line: #e5dccb; }
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--paper); }
+body { font-family: "Fredoka", system-ui, sans-serif; color: var(--ink); background: var(--paper); min-height: 100vh; padding: 16px 16px 60px; line-height: 1.45; }
+a { color: var(--ink); }
+.wrap { max-width: 1000px; margin: 0 auto; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pill { display: inline-block; background: #fff; color: var(--ink); text-decoration: none; font-weight: 700; border: 3px solid var(--ink); border-radius: 14px; box-shadow: 0 4px 0 var(--ink); padding: 5px 13px; font-size: 15px; cursor: pointer; font-family: inherit; }
+.pill.dark { background: var(--ink); color: #fff; }
+.pill.on { background: var(--sun); }
+h1 { font-family: "Lilita One", sans-serif; font-weight: 400; font-size: clamp(34px, 6vw, 52px); margin: 24px 0 6px; }
+.note { color: var(--muted); font-size: 15px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 16px 0; }
+.stat { background: #fff; border: 3px solid var(--ink); border-radius: 16px; padding: 10px 14px; box-shadow: 0 4px 0 var(--ink); }
+.stat small { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: .5px; }
+.stat b { font-size: 28px; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 16px; }
+.app { background: #fff; border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 5px 0 var(--ink); padding: 16px 18px; margin-bottom: 14px; }
+.app .hd { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+.app h2 { font-size: 21px; }
+.tag { display: inline-block; font-size: 13px; font-weight: 700; border: 2px solid var(--ink); border-radius: 999px; padding: 1px 10px; margin-left: 6px; vertical-align: 2px; }
+.tag.hired { background: #c8f2e6; } .tag.new { background: var(--sun); } .tag.closed { background: #eee; color: #777; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; margin-top: 10px; font-size: 15px; }
+dt { font-weight: 700; color: var(--muted); }
+dd { word-break: break-word; }
+blockquote { border-left: 4px solid var(--line); padding-left: 10px; margin-top: 8px; white-space: pre-wrap; font-size: 15px; }
+.acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.empty { text-align: center; padding: 40px 10px; font-size: 18px; color: var(--muted); }
+.how { background: #fffdf8; border: 2px dashed var(--line); border-radius: 14px; padding: 12px 16px; margin-top: 16px; font-size: 15px; }
+.how li { margin: 3px 0 3px 20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="pill" href="./">← job page</a><div style="display:flex;gap:8px"><a class="pill" id="ghLink" target="_blank" rel="noopener">open on GitHub</a><button class="pill dark" id="reload">refresh</button></div></div>
+  <h1>Admin</h1>
+  <p class="note">Every application and program people send arrives here. Nothing here is secret: it's read from the public GitHub repo. To hire or reject someone, you do it on GitHub (only the repo owner can).</p>
+  <div class="stats" id="stats"></div>
+  <div class="tabs" id="tabs"></div>
+  <div id="list"><div class="empty">Loading…</div></div>
+  <div class="how">
+    <b>How to run it</b>
+    <ul>
+      <li><b>Hire someone:</b> open their application on GitHub, add the label <b>hired</b>, and leave a comment to welcome them. (GitHub emails them about your comment.)</li>
+      <li><b>Turn someone down:</b> leave a kind comment and close the issue.</li>
+      <li><b>Check the weekly programs:</b> look at the "programs" tab. Anyone hired who hasn't handed one in this week is listed under "missing this week".</li>
+      <li>GitHub emails you whenever a new application or program arrives, as long as you're watching the repo.</li>
+    </ul>
+  </div>
+</div>
+<script>
+const REPO = 'lightningstudiosx/workfor';
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const safeUrl = u => /^https?:\/\//i.test(u || '') ? u : null;
+$('#ghLink').href = `https://github.com/${REPO}/issues`;
+let issues = [], tab = 'new';
+function field(body, name) { const m = (body || '').match(new RegExp('\\*\\*' + name + ':\\*\\*\\s*(.*)')); return m ? m[1].trim() : ''; }
+function weekOf(d) { const jan1 = new Date(d.getFullYear(), 0, 1); return Math.ceil(((d - jan1) / 864e5 + jan1.getDay() + 1) / 7); }
+async function load() {
+  $('#list').innerHTML = '<div class="empty">Loading…</div>';
+  try {
+    let all = [];
+    for (let page = 1; page <= 5; page++) {
+      const r = await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&per_page=100&page=${page}`, { headers: { Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error(r.status === 403 ? 'GitHub says slow down (too many refreshes). Try again in a few minutes.' : r.status === 404 ? 'The repo ' + REPO + ' was not found.' : 'GitHub error ' + r.status);
+      const got = await r.json(); all = all.concat(got.filter(i => !i.pull_request)); if (got.length < 100) break;
+    }
+    issues = all; render();
+  } catch (e) { $('#list').innerHTML = `<div class="empty">Couldn't load from GitHub: ${esc(e.message)}</div>`; }
+}
+function render() {
+  const apps = issues.filter(i => /^Application:/i.test(i.title)), progs = issues.filter(i => /^Program:/i.test(i.title));
+  const hired = apps.filter(i => i.labels.some(l => /hired/i.test(l.name)));
+  const isNew = i => i.state === 'open' && !i.labels.some(l => /hired/i.test(l.name));
+  const thisWeek = weekOf(new Date()), year = new Date().getFullYear();
+  const handedThisWeek = new Set(progs.filter(p => { const d = new Date(p.created_at); return d.getFullYear() === year && weekOf(d) === thisWeek; }).map(p => p.user.login.toLowerCase()));
+  const missing = hired.filter(a => !handedThisWeek.has((field(a.body, 'GitHub').replace(/^@/, '') || a.user.login).toLowerCase()));
+  $('#stats').innerHTML = [['new applications', apps.filter(isNew).length], ['hired', hired.length], ['programs handed in', progs.length], ['missing this week', missing.length]].map(([k, v]) => `<div class="stat"><small>${k}</small><b>${v}</b></div>`).join('');
+  const tabs = [['new', 'new'], ['hired', 'hired'], ['all', 'all applications'], ['programs', 'programs'], ['missing', 'missing this week']];
+  $('#tabs').innerHTML = ''; tabs.forEach(([k, l]) => { const b = document.createElement('button'); b.className = 'pill' + (tab === k ? ' on' : ''); b.textContent = l; b.onclick = () => { tab = k; render(); }; $('#tabs').appendChild(b); });
+  let list = tab === 'new' ? apps.filter(isNew) : tab === 'hired' ? hired : tab === 'all' ? apps : tab === 'programs' ? progs : missing;
+  if (!list.length) { $('#list').innerHTML = `<div class="empty">${tab === 'missing' ? 'Everyone hired has handed in a program this week. 🎉' : 'Nothing here yet.'}</div>`; return; }
+  $('#list').innerHTML = list.map(i => {
+    const st = i.labels.some(l => /hired/i.test(l.name)) ? '<span class="tag hired">hired</span>' : i.state === 'closed' ? '<span class="tag closed">closed</span>' : '<span class="tag new">new</span>';
+    const when = new Date(i.created_at).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+    if (/^Program:/i.test(i.title)) {
+      const link = safeUrl(field(i.body, 'Program'));
+      return `<div class="app"><div class="hd"><h2>${esc(i.title)}</h2><span class="note">${esc(when)}</span></div><dl><dt>From</dt><dd>@${esc(i.user.login)}</dd><dt>Program</dt><dd>${link ? `<a href="${esc(link)}" target="_blank" rel="noopener nofollow">${esc(link)}</a>` : esc(field(i.body, 'Program'))}</dd><dt>What it does</dt><dd>${esc(field(i.body, 'What it does'))}</dd></dl><div class="acts"><a class="pill" href="${esc(i.html_url)}" target="_blank" rel="noopener">open on GitHub</a></div></div>`;
+    }
+    const made = safeUrl(field(i.body, 'Something they made'));
+    const why = ((i.body || '').split('**Why they want to work for kai.fun:**')[1] || '').split('\n- [')[0].replace(/^\s*>\s?/gm, '').trim();
+    return `<div class="app"><div class="hd"><h2>${esc(field(i.body, 'Name') || i.title)} ${st}</h2><span class="note">${esc(when)} · sent by @${esc(i.user.login)}</span></div>
+      <dl><dt>Email</dt><dd>${esc(field(i.body, 'Email'))}</dd><dt>GitHub</dt><dd>${esc(field(i.body, 'GitHub'))}</dd><dt>Experience</dt><dd>${esc(field(i.body, 'Experience'))}</dd><dt>Programs in</dt><dd>${esc(field(i.body, 'Programs in'))}</dd>
+      <dt>Made</dt><dd>${made ? `<a href="${esc(made)}" target="_blank" rel="noopener nofollow">${esc(made)}</a>` : esc(field(i.body, 'Something they made'))}</dd><dt>First program</dt><dd>${esc(field(i.body, 'First program they\'d make'))}</dd></dl>
+      ${why ? `<blockquote>${esc(why)}</blockquote>` : ''}
+      <div class="acts"><a class="pill dark" href="${esc(i.html_url)}" target="_blank" rel="noopener">hire or reply on GitHub</a></div></div>`;
+  }).join('');
+}
+$('#reload').onclick = load;
+load();
+</script>
+</body>
+</html>

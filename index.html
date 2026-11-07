@@ -71,7 +71,7 @@ select.hand { appearance: none; cursor: pointer; }
 </style>
 </head>
 <body>
-<div class="topbar"><a class="back" href="https://kaifun.fun/">← kai.fun</a><a class="back" href="#weekly">weekly program form ↓</a></div>
+<div class="topbar"><a class="back" href="https://kaifun.fun/">← kai.fun</a><a class="back" href="worker.html">employee portal →</a></div>
 
 <form class="sheet" id="app" novalidate>
   <div class="formno"><span>FORM KF-1 (rev. 11/2026)</span><span>PAGE 1 OF 1</span></div>
@@ -81,7 +81,7 @@ select.hand { appearance: none; cursor: pointer; }
 
   <div class="sec"><h2>SECTION A: POSITION</h2>
     <div class="grid"><div><span class="lbl">Position applied for</span><span class="printed">Programmer</span></div><div><span class="lbl">Location</span><span class="printed">Remote (anywhere)</span></div></div>
-    <div class="grid"><div><span class="lbl">Rate of pay</span><span class="big-pay">−$0.00</span> <span class="small">per week</span></div><div><span class="lbl">Hours</span><span class="printed">Whenever you want</span></div></div>
+    <div class="grid"><div><span class="lbl">Rate of pay</span><span class="big-pay">−$0.00</span> <span class="small">per week, plus KaiBucks (KB)</span></div><div><span class="lbl">Hours</span><span class="printed">Whenever you want</span></div></div>
     <div class="grid one"><div><span class="lbl">Requirement</span><span class="printed">1 (one) program every week, no matter the size or what it does.</span></div></div>
   </div>
 
@@ -117,7 +117,8 @@ select.hand { appearance: none; cursor: pointer; }
       <li>The rate of pay is <b>−$0.00 per week</b>. This position is unpaid. There is no money now and there will be no money later.</li>
       <li>The employee must hand in <b>1 (one) program every week</b>. It may be any size and do anything. If it runs, it counts.</li>
       <li>Programs must be the employee's own work.</li>
-      <li>Employees may be promoted for good work. Employees who stop handing in programs may be fired. Fired employees can apply again.</li>
+      <li>Employees earn <b>KaiBucks (KB)</b> for every program they hand in, and more at higher ranks. The exchange rate is <b>$1 = 0 KB</b>. KaiBucks have no money value and can only be spent on upgrading your office in the Employee Portal.</li>
+      <li>Employees may be promoted for good work. Employees who stop handing in programs may be fired. Fired employees can apply again. Blacklisted accounts can't apply or work at all.</li>
       <li>This is a volunteer, just-for-fun position. Either side can end it at any time. kai.fun will never ask for money or passwords.</li>
       <li>This application will be posted <b>publicly on GitHub</b>, including the email address above.</li>
     </ol>
@@ -129,6 +130,7 @@ select.hand { appearance: none; cursor: pointer; }
   </div></div>
 
   <div class="office"><b>FOR OFFICE USE ONLY</b><span>Received:</span><span>Decision:</span><span>Rank:</span></div>
+  <div class="err" id="e-black" style="margin-top:12px;font-size:16px">This GitHub account is on the kai.fun blacklist, so it can't apply.</div>
   <div class="submit"><span class="small">Pressing the button opens GitHub with this form filled in. Press <b>Create</b> there to hand it in.</span><button class="btn" type="submit">HAND IN APPLICATION</button></div>
   <div class="stamp got">RECEIVED</div>
   <div class="after" id="after">
@@ -139,33 +141,28 @@ select.hand { appearance: none; cursor: pointer; }
   </div>
 </form>
 
-<form class="sheet" id="weekly" novalidate>
+<div class="sheet" id="weekly">
   <div class="formno"><span>FORM KF-2 (rev. 11/2026)</span><span>EMPLOYEES ONLY</span></div>
-  <div class="title"><h1>WEEKLY PROGRAM SUBMISSION</h1><p>ONE PER WEEK · ANY SIZE · ANY PROGRAM</p></div>
-  <div class="sec"><h2>EMPLOYEE AND PROGRAM</h2>
-    <div class="grid"><div><label class="lbl" for="w-gh">GitHub username</label><input class="hand" id="w-gh" maxlength="39" autocomplete="off" spellcheck="false"></div><div><span class="lbl">Week</span><span class="hand-in" id="w-week"></span></div></div>
-    <div class="grid one"><div><label class="lbl" for="w-link">Link to the program</label><input class="hand" id="w-link" type="url" maxlength="300"></div></div>
-    <div class="grid one"><div><label class="lbl" for="w-what">What does it do?</label><input class="hand" id="w-what" maxlength="300"></div></div>
-  </div>
-  <div class="err" id="e-weekly" style="margin-top:8px">Fill in all three: your GitHub username, a link starting with https://, and what it does.</div>
-  <div class="submit"><span class="small">Opens GitHub with this form filled in. Press <b>Create</b> there.</span><button class="btn" type="submit">HAND IN PROGRAM</button></div>
-</form>
+  <div class="title"><h1>ALREADY HIRED?</h1><p>HAND IN YOUR WEEKLY PROGRAM IN THE EMPLOYEE PORTAL</p></div>
+  <p style="text-align:center;margin-top:14px;font-size:15px;line-height:1.5">Link your GitHub account, see your position and your KaiBucks, upgrade your office, and test your HTML program in the browser before you hand it in.</p>
+  <div class="submit" style="justify-content:center"><a class="btn" href="worker.html" style="text-decoration:none">GO TO THE EMPLOYEE PORTAL</a></div>
+</div>
 <p class="small" style="text-align:center"><a href="admin.html">Admin</a></p>
 
+<script src="hr.js"></script>
 <script>
-const REPO = 'lightningstudiosx/workfor';
+const REPO = HR.REPO;
 const $ = s => document.querySelector(s);
 const clean = s => String(s || '').replace(/[\r\n]+/g, ' ').trim();
 const GH = /^[a-z\d](?:[a-z\d-]{0,38})$/i;
 const today = new Date(), iso = today.toISOString().slice(0, 10);
 const weekOf = d => { const j = new Date(d.getFullYear(), 0, 1); return Math.ceil(((d - j) / 864e5 + j.getDay() + 1) / 7); };
 $('#date').textContent = today.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
-$('#w-week').textContent = `week ${weekOf(today)} of ${today.getFullYear()}`;
 const issueUrl = (title, body) => `https://github.com/${REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 // "mark one" behaves like a real form: ticking one unticks the others
 document.querySelectorAll('#level input').forEach(b => b.addEventListener('change', () => { if (b.checked) document.querySelectorAll('#level input').forEach(o => { if (o !== b) o.checked = false; }); }));
 function flag(id, bad, field) { $('#e-' + id).style.display = bad ? 'block' : 'none'; if (field) field.classList.toggle('bad', bad); return bad; }
-$('#app').addEventListener('submit', e => {
+$('#app').addEventListener('submit', async e => {
   e.preventDefault();
   const v = { name: clean($('#name').value), email: clean($('#email').value), gh: clean($('#gh').value).replace(/^@/, ''), link: clean($('#link').value), why: $('#why').value.trim(), first: clean($('#first').value), sig: clean($('#sig').value) };
   const level = (document.querySelector('#level input:checked') || {}).value, langs = [...document.querySelectorAll('#langs input:checked')].map(x => x.value);
@@ -179,6 +176,10 @@ $('#app').addEventListener('submit', e => {
   bad = flag('terms', !$('#c-terms').checked) || bad;
   bad = flag('sig', !v.sig || v.sig.toLowerCase() !== v.name.toLowerCase(), $('#sig')) || bad;
   if (bad) { const f = [...document.querySelectorAll('.err')].find(x => x.style.display === 'block'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+  // blacklisted accounts can't apply
+  const popup = window.open('', '_blank');
+  try { const m = HR.model(await HR.fetchIssues()); if (m.black.has(v.gh.toLowerCase())) { if (popup) popup.close(); flag('black', true); $('#e-black').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; } } catch (err) {}
+  flag('black', false);
   const body = [
     '### Application for employment: Programmer at kai.fun', '',
     `**Name:** ${v.name}`, `**Email:** ${v.email}`, `**GitHub:** @${v.gh}`, `**Experience:** ${level}`, `**Programs in:** ${langs.length ? langs.join(', ') : 'not said'}`,
@@ -188,16 +189,10 @@ $('#app').addEventListener('submit', e => {
   ].join('\n');
   const url = issueUrl(`Application: ${v.name} (@${v.gh})`, body);
   $('#again').href = url; $('#mini').textContent = body;
-  window.open(url, '_blank', 'noopener');
+  if (popup) { try { popup.opener = null; popup.location.href = url; } catch (err) { window.open(url, '_blank', 'noopener'); } } else window.open(url, '_blank', 'noopener');
   $('#app').classList.add('sent'); $('#after').scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
-$('#weekly').addEventListener('submit', e => {
-  e.preventDefault();
-  const gh = clean($('#w-gh').value).replace(/^@/, ''), link = clean($('#w-link').value), what = clean($('#w-what').value);
-  const ok = GH.test(gh) && /^https?:\/\/\S+$/.test(link) && what.length > 1; $('#e-weekly').style.display = ok ? 'none' : 'block'; if (!ok) return;
-  const body = [`**From:** @${gh}`, `**Week:** ${weekOf(today)} of ${today.getFullYear()}`, `**Program:** ${link}`, `**What it does:** ${what}`, '', `_Form KF-2, handed in from workfor.kaifun.fun on ${iso}_`].join('\n');
-  window.open(issueUrl(`Program: week ${weekOf(today)} (@${gh})`, body), '_blank', 'noopener');
-});
+
 </script>
 </body>
 </html>

@@ -15,10 +15,10 @@
 html { background: var(--desk); }
 body { font-family: "Courier Prime", "Courier New", monospace; color: var(--ink); background: var(--desk) radial-gradient(rgba(0,0,0,.05) 1px, transparent 1.5px) 0 0 / 6px 6px; min-height: 100vh; padding: 16px 12px 60px; font-size: 15px; }
 a { color: var(--ink); }
-.wrap { max-width: 1100px; margin: 0 auto; }
+.wrap { max-width: 1150px; margin: 0 auto; }
 .top { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
 .b { font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); padding: 5px 11px; box-shadow: 3px 3px 0 rgba(0,0,0,.22); text-decoration: none; display: inline-block; }
-.b:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgba(0,0,0,.22); }
+.b:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgba(0,0,0,.22); }
 .b.dark { background: var(--ink); color: var(--paper); }
 .b.red { background: var(--red); color: #fff; border-color: var(--red); }
 .b.green { background: var(--green); color: #fff; border-color: var(--green); }
@@ -29,25 +29,24 @@ a { color: var(--ink); }
 h1 { font-size: clamp(22px, 4.5vw, 30px); letter-spacing: 1.5px; }
 h2 { font-size: 15px; letter-spacing: 1.5px; background: var(--ink); color: var(--paper); padding: 4px 10px; margin: 0 -2px 10px; }
 .note { color: #555; font-size: 13px; line-height: 1.45; }
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 14px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 14px; }
 .stat { border: 2px solid var(--ink); padding: 8px 10px; }
 .stat small { display: block; font-size: 11px; letter-spacing: .8px; text-transform: uppercase; }
 .stat b { font-size: 26px; }
 .conn { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
-.conn input[type=password] { font-family: inherit; font-size: 14px; border: 2px solid var(--ink); padding: 6px 8px; min-width: 0; flex: 1 1 260px; background: #fff; }
-.ok { color: var(--green); font-weight: 700; }
-.bad { color: var(--red); font-weight: 700; }
+.conn input { font-family: inherit; font-size: 14px; border: 2px solid var(--ink); padding: 6px 8px; min-width: 0; flex: 1 1 240px; background: #fff; }
+.ok { color: var(--green); font-weight: 700; } .bad { color: var(--red); font-weight: 700; }
 .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th, td { border: 1px solid var(--ink); padding: 6px 8px; text-align: left; vertical-align: top; }
 th { background: #efe9dc; font-size: 12px; letter-spacing: .6px; text-transform: uppercase; }
-tr.emp { cursor: pointer; }
-tr.emp:hover td { background: #fffbe8; }
-tr.more td { background: #fffdf3; }
+tr.emp { cursor: pointer; } tr.emp:hover td { background: #fffbe8; } tr.more td { background: #fffdf3; }
 .rank { display: inline-block; border: 2px solid var(--ink); padding: 0 6px; font-weight: 700; font-size: 12px; white-space: nowrap; }
 .r0 { background: #fff; } .r1 { background: #e8f1ff; } .r2 { background: #dff5e6; } .r3 { background: #fff0c2; } .r4 { background: #ffd9d4; }
+.rank.black { background: var(--ink); color: var(--paper); }
 .wk-yes { color: var(--green); font-weight: 700; } .wk-no { color: var(--red); font-weight: 700; }
 .card { border: 2px solid var(--ink); padding: 12px 14px; margin-bottom: 12px; background: #fff; }
+.card.warn { border-color: var(--red); }
 .card .hd { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 .card h3 { font-size: 17px; }
 dl { display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; margin-top: 8px; font-size: 14px; }
@@ -55,28 +54,33 @@ dt { font-weight: 700; } dd { word-break: break-word; }
 blockquote { font-family: "Caveat", cursive; color: var(--pen); font-size: 22px; line-height: 1.15; border-left: 3px solid var(--rule); padding-left: 10px; margin-top: 8px; white-space: pre-wrap; }
 .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 .empty { text-align: center; padding: 30px 10px; color: #555; }
-.hist { margin-top: 8px; font-size: 13px; }
-.hist li { margin: 2px 0 2px 18px; }
-.toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 8px 16px; font-weight: 700; opacity: 0; transition: .25s; pointer-events: none; z-index: 9; max-width: 92vw; text-align: center; }
+.hist { margin-top: 8px; font-size: 13px; } .hist li { margin: 2px 0 2px 18px; }
+.flag { color: var(--red); font-weight: 700; font-size: 13px; }
+.toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 8px 16px; font-weight: 700; opacity: 0; transition: .25s; pointer-events: none; z-index: 30; max-width: 92vw; text-align: center; }
 .toast.show { opacity: 1; }
 .tablewrap { overflow-x: auto; }
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; padding: 14px; z-index: 20; }
+.modal.hide { display: none; }
+.modal .sheet { width: min(100%, 900px); max-height: calc(100vh - 28px); overflow: auto; margin: 0; }
+iframe.run { width: 100%; height: 420px; border: 2px solid var(--ink); background: #fff; }
+pre.src { font-family: ui-monospace, Consolas, monospace; font-size: 12px; background: #1d1d22; color: #f3efe2; padding: 10px; max-height: 240px; overflow: auto; white-space: pre-wrap; margin-top: 10px; }
 @media (max-width: 700px) { .hide-sm { display: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><a class="b" href="./">← application form</a><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="b" id="ghLink" target="_blank" rel="noopener">GitHub issues</a><button class="b dark" id="reload">refresh</button></div></div>
+  <div class="top"><a class="b" href="./">← application form</a><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="b" href="worker.html">employee portal</a><a class="b" id="ghLink" target="_blank" rel="noopener">GitHub issues</a><button class="b dark" id="reload">refresh</button></div></div>
 
   <div class="sheet">
     <h1>HR ADMIN · kai.fun</h1>
-    <p class="note">Applications, employees, promotions and firing. Everything comes from the issues in the public <b>workfor</b> repo on GitHub.</p>
+    <p class="note">Applications, employees, promotions, firing, the blacklist and KaiBucks. Everything comes from the issues in the public <b>workfor</b> repo on GitHub.</p>
     <div class="stats" id="stats"></div>
   </div>
 
   <div class="sheet">
     <h2>ADMIN LOGIN (GITHUB TOKEN)</h2>
     <div id="connBox"></div>
-    <p class="note" style="margin-top:8px">Anyone can look at this page, but only someone with a token that can edit the <b>workfor</b> repo can hire, promote or fire. The token is saved <b>only in this browser</b> and is sent only to GitHub. To make one: GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token → Repository access: only <b>workfor</b> → Permissions: <b>Issues: Read and write</b>. Never share it, and never put it in a file or a chat.</p>
+    <p class="note" style="margin-top:8px">Anyone can look at this page, but only someone with a token that can edit the <b>workfor</b> repo can hire, promote, fire or blacklist. The token is saved <b>only in this browser</b> and is sent only to GitHub. To make one: GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token → Repository access: only <b>workfor</b> → Permissions: <b>Issues: Read and write</b>. Never share it, and never put it in a file or a chat.</p>
   </div>
 
   <div class="sheet">
@@ -84,18 +88,15 @@ blockquote { font-family: "Caveat", cursive; color: var(--pen); font-size: 22px;
     <div id="list"><div class="empty">Loading…</div></div>
   </div>
 </div>
+<div class="modal hide" id="runM"><div class="sheet"><h2 id="runT">PROGRAM</h2><iframe class="run" id="runF" sandbox="allow-scripts allow-modals" title="Program running"></iframe><pre class="src" id="runSrc"></pre><div class="acts"><button class="b dark" id="runClose">close</button></div></div></div>
 <div class="toast" id="toast"></div>
 
+<script src="hr.js"></script>
 <script>
-const REPO = 'lightningstudiosx/workfor';
-const RANKS = ['Trainee', 'Programmer', 'Senior Programmer', 'Lead Programmer', 'Head of Code'];
-const LABELS = [['hired', '1d7a46'], ['fired', 'b3261e'], ['rejected', '888888'], ...RANKS.map((r, i) => ['rank: ' + r, ['ffffff', 'cfe0ff', 'c7efd3', 'ffe59a', 'ffc4bc'][i]])];
+const { REPO, RANKS, esc, safeUrl, field, has, fmtD } = HR;
+const LABELS = [['hired', '1d7a46'], ['fired', 'b3261e'], ['rejected', '888888'], ['blacklisted', '000000'], ['not counted', 'cccccc'], ...RANKS.map((r, i) => ['rank: ' + r, ['ffffff', 'cfe0ff', 'c7efd3', 'ffe59a', 'ffc4bc'][i]])];
 const $ = s => document.querySelector(s);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const safeUrl = u => /^https?:\/\/[^\s"'<>]+$/i.test(u || '') ? u : null;
-const fmtD = d => d ? new Date(d).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : '';
-const weekKey = d => { d = new Date(d); const j = new Date(d.getFullYear(), 0, 1); return d.getFullYear() + '-' + Math.ceil(((d - j) / 864e5 + j.getDay() + 1) / 7); };
-function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 3200); }
+function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 3400); }
 $('#ghLink').href = `https://github.com/${REPO}/issues`;
 
 // ---------------------------------------------------------------- GitHub
@@ -109,7 +110,7 @@ async function api(method, path, body) {
   if (r.status === 204) return null;
   if (!r.ok) {
     if (method === 'DELETE' && r.status === 404) return null;
-    if (method === 'POST' && path.endsWith('/labels') && r.status === 422) return null;
+    if (method === 'POST' && /\/labels$/.test(path) && r.status === 422) return null;
     if (r.status === 401) throw new Error('GitHub says the token is wrong or expired.');
     if (r.status === 403) throw new Error('GitHub refused (no permission, or too many requests). Try again in a minute.');
     throw new Error('GitHub error ' + r.status);
@@ -119,7 +120,7 @@ async function api(method, path, body) {
 async function connect(t, remember) {
   token = t;
   try {
-    const repo = await api('GET', `/repos/${REPO}`); const u = await api('GET', '/user');
+    const repo = await api('GET', `/repos/${REPO}`), u = await api('GET', '/user');
     me = u.login; canEdit = !!(repo.permissions && (repo.permissions.push || repo.permissions.admin || repo.permissions.triage));
     if (!canEdit) throw new Error(`@${me} can't edit ${REPO}.`);
     if (remember) { try { localStorage.setItem('workfor.token', t); } catch (e) {} }
@@ -131,127 +132,154 @@ async function connect(t, remember) {
 function logout() { token = null; me = null; canEdit = false; try { localStorage.removeItem('workfor.token'); } catch (e) {} drawConn(); render(); toast('Logged out. The token was removed from this browser.'); }
 function drawConn() {
   const b = $('#connBox');
-  if (canEdit) { b.innerHTML = `<p><span class="ok">✓ Logged in as @${esc(me)}</span> · you can hire, promote and fire.</p><div class="conn"><button class="b" id="logout">log out and forget the token</button></div>`; $('#logout').onclick = logout; return; }
+  if (canEdit) { b.innerHTML = `<p><span class="ok">✓ Logged in as @${esc(me)}</span> · you can hire, promote, fire and blacklist.</p><div class="conn"><button class="b" id="logout">log out and forget the token</button></div>`; $('#logout').onclick = logout; return; }
   b.innerHTML = `<p class="bad">Not logged in: you can look, but not change anything.</p><div class="conn"><input type="password" id="tok" placeholder="paste your GitHub token" autocomplete="off" spellcheck="false"><label style="font-size:13px"><input type="checkbox" id="rem" checked> remember on this device</label><button class="b dark" id="go">log in</button></div>`;
   $('#go').onclick = () => { const t = $('#tok').value.trim(); if (t) connect(t, $('#rem').checked); };
 }
 
 // ---------------------------------------------------------------- data
-let issues = [], comments = {}, tab = 'employees', open = new Set(), confirmKey = null, busy = false;
-const field = (body, name) => { const m = (body || '').match(new RegExp('\\*\\*' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ':\\*\\*\\s*(.*)')); return m ? m[1].trim() : ''; };
-const has = (i, n) => i.labels.some(l => l.name.toLowerCase() === n.toLowerCase());
-const rankOf = i => { const l = i.labels.find(l => /^rank: /i.test(l.name)); const k = l ? RANKS.findIndex(r => 'rank: ' + r.toLowerCase() === l.name.toLowerCase()) : 0; return k < 0 ? 0 : k; };
-const ghOf = i => (field(i.body, 'GitHub').replace(/^@/, '') || i.user.login).toLowerCase();
-const isApp = i => /^Application:/i.test(i.title), isProg = i => /^Program:/i.test(i.title);
-const isEmp = i => isApp(i) && has(i, 'hired') && !has(i, 'fired');
-const isFired = i => isApp(i) && has(i, 'fired');
-const isNewApp = i => isApp(i) && i.state === 'open' && !has(i, 'hired') && !has(i, 'fired') && !has(i, 'rejected');
+let issues = [], M = { people: {}, black: new Set(), apps: [], progs: [] }, comments = {}, tab = 'employees', open = new Set(), confirmKey = null, busy = false;
 async function load() {
   $('#list').innerHTML = '<div class="empty">Loading…</div>';
   try {
-    let all = [];
-    for (let p = 1; p <= 5; p++) { const got = await api('GET', `/repos/${REPO}/issues?state=all&per_page=100&page=${p}`); all = all.concat(got.filter(i => !i.pull_request)); if (got.length < 100) break; }
-    issues = all; comments = {};
-    render();
-    // fetch comment history for employees (hire dates, promotions)
-    await Promise.all(issues.filter(i => isApp(i) && (has(i, 'hired') || has(i, 'fired')) && i.comments > 0).slice(0, 40).map(async i => { try { comments[i.number] = await api('GET', `/repos/${REPO}/issues/${i.number}/comments?per_page=100`); } catch (e) {} }));
+    issues = await HR.fetchIssues(token); M = HR.model(issues); comments = {}; render();
+    await Promise.all(M.apps.filter(i => (has(i, 'hired') || has(i, 'fired')) && i.comments > 0).slice(0, 40).map(async i => { try { comments[i.number] = await api('GET', `/repos/${REPO}/issues/${i.number}/comments?per_page=100`); } catch (e) {} }));
     render();
   } catch (e) { $('#list').innerHTML = `<div class="empty">Couldn't load from GitHub: ${esc(e.message)}</div>`; }
 }
-function history(i) {
-  return (comments[i.number] || []).filter(c => /^\*\*(Hired|Promoted|Moved down|Fired|Rehired)/.test(c.body || '')).map(c => ({ when: c.created_at, what: (c.body.match(/^\*\*([^*]+)\*\*/) || [])[1] || '' }));
-}
-function hiredOn(i) { const h = history(i).filter(x => /^(Hired|Rehired)/.test(x.what)); return h.length ? h[h.length - 1].when : null; }
-function progsBy(gh) { return issues.filter(p => isProg(p) && (p.user.login.toLowerCase() === gh || field(p.body, 'From').replace(/^@/, '').toLowerCase() === gh)).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); }
+const history = i => (comments[i.number] || []).filter(c => /^\*\*(Hired|Promoted|Moved down|Fired|Rehired|Blacklisted|Removed from the blacklist)/.test(c.body || '')).map(c => ({ when: c.created_at, what: (c.body.match(/^\*\*([^*]+)\*\*/) || [])[1] || '' }));
+const hiredOn = i => { const h = history(i).filter(x => /^(Hired|Rehired)/.test(x.what)); return h.length ? h[h.length - 1].when : null; };
+const personOf = i => M.people[HR.isApp(i) ? HR.appGh(i) : HR.progGh(i)];
+function codeOf(i) { const m = (i.body || '').match(/(`{3,})html\n([\s\S]*?)\n\1/); return m ? m[2] : null; }
 
 // ---------------------------------------------------------------- actions (need a token)
-async function act(i, kind) {
+async function act(i, kind, extra) {
   if (!canEdit) { toast('Log in with your GitHub token first (box above).'); return; }
   if (busy) return;
-  const key = kind + i.number;
-  if ((kind === 'fire' || kind === 'reject') && confirmKey !== key) { confirmKey = key; render(); toast(`Press "${kind === 'fire' ? 'yes, fire' : 'yes, reject'}" to confirm.`); return; }
+  const key = kind + (i ? i.number : extra);
+  if (['fire', 'reject', 'blacklist', 'blacklistName'].includes(kind) && confirmKey !== key) { confirmKey = key; render(); toast('Press it again to confirm.'); return; }
   confirmKey = null; busy = true; render();
-  const n = i.number, nm = field(i.body, 'Name') || '@' + i.user.login, r = rankOf(i), base = `/repos/${REPO}/issues/${n}`;
-  const dropRank = async () => { for (const l of i.labels.filter(l => /^rank: /i.test(l.name))) await api('DELETE', `${base}/labels/${encodeURIComponent(l.name)}`); };
   try {
+    if (kind === 'blacklistName') {
+      const gh = extra; const iss = await api('POST', `/repos/${REPO}/issues`, { title: `Blacklist: @${gh}`, body: `**Blacklisted:** @${gh}\n\nAdded to the kai.fun blacklist by the admin on ${new Date().toISOString().slice(0, 10)}. This account can't apply or work at kai.fun.`, labels: ['blacklisted'] });
+      if (iss && iss.number) await api('PATCH', `/repos/${REPO}/issues/${iss.number}`, { state: 'closed' });
+      toast(`@${gh} is on the blacklist.`); busy = false; await load(); return;
+    }
+    const n = i.number, base = `/repos/${REPO}/issues/${n}`;
+    if (kind === 'count' || kind === 'nocount') {
+      if (kind === 'nocount') await api('POST', `${base}/labels`, { labels: ['not counted'] }); else await api('DELETE', `${base}/labels/${encodeURIComponent('not counted')}`);
+      toast(kind === 'nocount' ? "That program won't count (no KaiBucks for it)." : 'That program counts again.'); busy = false; await load(); return;
+    }
+    if (HR.isBlackIssue(i) && kind === 'unblacklist') { await api('DELETE', `${base}/labels/blacklisted`); toast('Removed from the blacklist.'); busy = false; await load(); return; }
+    const nm = field(i.body, 'Name') || '@' + i.user.login, r = HR.rankOf(i);
+    const dropRank = async () => { for (const l of i.labels.filter(l => /^rank: /i.test(l.name))) await api('DELETE', `${base}/labels/${encodeURIComponent(l.name)}`); };
+    const say = body => api('POST', `${base}/comments`, { body: body + '\n\n— kai.fun HR' });
     if (kind === 'hire') {
       await api('POST', `${base}/labels`, { labels: ['hired', 'rank: ' + RANKS[0]] });
-      await api('POST', `${base}/comments`, { body: `**Hired** as ${RANKS[0]}\n\nWelcome to kai.fun, ${nm}! 🎉 You start as a **${RANKS[0]}**.\n\nYour job: hand in **1 program every week**, any size, doing anything. Use the weekly form at https://workfor.kaifun.fun/#weekly.\n\nPay: -$0 a week, as promised.\n\n— kai.fun HR` });
+      await say(`**Hired** as ${RANKS[0]}\n\nWelcome to kai.fun, ${nm}! 🎉 You start as a **${RANKS[0]}**.\n\nYour job: hand in **1 program every week**, any size, doing anything, in the Employee Portal: https://workfor.kaifun.fun/worker.html\n\nPay: -$0 a week, plus ${HR.KB_PER_PROGRAM[0]} KaiBucks per program (exchange rate $1 = 0 KB).`);
     } else if (kind === 'reject') {
-      await api('POST', `${base}/labels`, { labels: ['rejected'] });
-      await api('POST', `${base}/comments`, { body: `**Not hired**\n\nThanks for applying to kai.fun, ${nm}. It's a no for now, but you're welcome to apply again later.\n\n— kai.fun HR` });
-      await api('PATCH', base, { state: 'closed' });
+      await api('POST', `${base}/labels`, { labels: ['rejected'] }); await say(`**Not hired**\n\nThanks for applying to kai.fun, ${nm}. It's a no for now, but you're welcome to apply again later.`); await api('PATCH', base, { state: 'closed' });
     } else if (kind === 'promote' || kind === 'demote') {
       const nr = Math.max(0, Math.min(RANKS.length - 1, r + (kind === 'promote' ? 1 : -1))); if (nr === r) { busy = false; render(); return; }
       await dropRank(); await api('POST', `${base}/labels`, { labels: ['rank: ' + RANKS[nr]] });
-      await api('POST', `${base}/comments`, { body: kind === 'promote' ? `**Promoted** to ${RANKS[nr]}\n\nCongratulations, ${nm}! 📈 You've been promoted from ${RANKS[r]} to **${RANKS[nr]}**. Your pay has gone up from -$0 to -$0.\n\n— kai.fun HR` : `**Moved down** to ${RANKS[nr]}\n\n${nm}, you've been moved from ${RANKS[r]} to **${RANKS[nr]}**. Keep handing in those programs and you'll be back up in no time.\n\n— kai.fun HR` });
+      await say(kind === 'promote' ? `**Promoted** to ${RANKS[nr]}\n\nCongratulations, ${nm}! 📈 You've been promoted from ${RANKS[r]} to **${RANKS[nr]}**. Your pay has gone up from -$0 to -$0, and you now earn **${HR.KB_PER_PROGRAM[nr]} KaiBucks** per program.` : `**Moved down** to ${RANKS[nr]}\n\n${nm}, you've been moved from ${RANKS[r]} to **${RANKS[nr]}**. Keep handing in those programs and you'll be back up in no time.`);
     } else if (kind === 'fire') {
       await dropRank(); await api('DELETE', `${base}/labels/hired`); await api('POST', `${base}/labels`, { labels: ['fired'] });
-      await api('POST', `${base}/comments`, { body: `**Fired**\n\n${nm}, you've been let go from kai.fun. 📦 Thanks for the programs you made. You can fill out a new application any time at https://workfor.kaifun.fun.\n\n— kai.fun HR` });
-      await api('PATCH', base, { state: 'closed' });
+      await say(`**Fired**\n\n${nm}, you've been let go from kai.fun. 📦 Thanks for the programs you made. You can fill out a new application any time at https://workfor.kaifun.fun.`); await api('PATCH', base, { state: 'closed' });
+    } else if (kind === 'blacklist') {
+      await dropRank(); await api('DELETE', `${base}/labels/hired`); await api('POST', `${base}/labels`, { labels: ['blacklisted'] });
+      await say(`**Blacklisted**\n\n${nm}, this GitHub account has been put on the kai.fun blacklist. It can't apply, work, or hand in programs.`); await api('PATCH', base, { state: 'closed' });
+    } else if (kind === 'unblacklist') {
+      await api('DELETE', `${base}/labels/blacklisted`); await say(`**Removed from the blacklist**\n\n${nm} can apply to kai.fun again.`);
     } else if (kind === 'rehire') {
-      await api('DELETE', `${base}/labels/fired`); await api('DELETE', `${base}/labels/rejected`); await api('POST', `${base}/labels`, { labels: ['hired', 'rank: ' + RANKS[0]] });
-      await api('PATCH', base, { state: 'open' });
-      await api('POST', `${base}/comments`, { body: `**Rehired** as ${RANKS[0]}\n\nWelcome back, ${nm}! You're starting again as a **${RANKS[0]}**. One program a week, as before.\n\n— kai.fun HR` });
+      for (const l of ['fired', 'rejected', 'blacklisted']) await api('DELETE', `${base}/labels/${l}`);
+      await api('POST', `${base}/labels`, { labels: ['hired', 'rank: ' + RANKS[0]] }); await api('PATCH', base, { state: 'open' });
+      await say(`**Rehired** as ${RANKS[0]}\n\nWelcome back, ${nm}! You're starting again as a **${RANKS[0]}**. One program a week, as before.`);
     }
-    toast({ hire: `Hired ${nm}.`, reject: `Turned down ${nm}.`, promote: `Promoted ${nm}.`, demote: `Moved ${nm} down a rank.`, fire: `Fired ${nm}.`, rehire: `Rehired ${nm}.` }[kind] + ' GitHub has emailed them.');
+    toast({ hire: `Hired ${nm}.`, reject: `Turned down ${nm}.`, promote: `Promoted ${nm}.`, demote: `Moved ${nm} down a rank.`, fire: `Fired ${nm}.`, blacklist: `Blacklisted ${nm}.`, unblacklist: `${nm} is off the blacklist.`, rehire: `Rehired ${nm}.` }[kind] + ' GitHub has emailed them.');
     busy = false; await load();
   } catch (e) { busy = false; toast(e.message); render(); }
 }
 
 // ---------------------------------------------------------------- drawing
-function actions(i) {
-  const d = !canEdit || busy ? 'disabled' : '', btn = (k, label, cls = '') => `<button class="b ${cls}" data-act="${k}" data-n="${i.number}" ${d}>${label}</button>`;
-  const yes = k => confirmKey === k + i.number;
-  let h = '';
-  if (isNewApp(i)) h += btn('hire', 'hire', 'green') + btn('reject', yes('reject') ? 'yes, reject' : 'reject', yes('reject') ? 'red' : '');
-  if (isEmp(i)) { const r = rankOf(i); h += btn('promote', r < RANKS.length - 1 ? `promote to ${RANKS[r + 1]}` : 'top rank', 'green').replace(r >= RANKS.length - 1 ? '<button' : '<x', r >= RANKS.length - 1 ? '<button disabled' : '<x'); if (r > 0) h += btn('demote', `move down to ${RANKS[r - 1]}`); h += btn('fire', yes('fire') ? 'yes, fire' : 'fire', yes('fire') ? 'red' : ''); }
-  if (isFired(i) || (isApp(i) && has(i, 'rejected'))) h += btn('rehire', isFired(i) ? 'rehire' : 'hire after all', 'green');
-  h += `<a class="b" href="${esc(i.html_url)}" target="_blank" rel="noopener">open on GitHub</a>`;
-  return `<div class="acts">${h}</div>`;
+const B = (k, n, label, cls = '', dis = false) => `<button class="b ${cls}" data-act="${k}" data-n="${n}" ${!canEdit || busy || dis ? 'disabled' : ''}>${label}</button>`;
+const sure = (k, n) => confirmKey === k + n;
+function appActions(i) {
+  const n = i.number, P = personOf(i); let h = '';
+  const st = P ? P.status : 'none', isHired = has(i, 'hired') && !has(i, 'fired') && !has(i, 'blacklisted');
+  if (st === 'blacklisted') h += B('unblacklist', n, 'remove from blacklist');
+  else if (isHired) { const r = HR.rankOf(i); h += B('promote', n, r < RANKS.length - 1 ? `promote to ${RANKS[r + 1]}` : 'top rank', 'green', r >= RANKS.length - 1); if (r > 0) h += B('demote', n, `move down to ${RANKS[r - 1]}`); h += B('fire', n, sure('fire', n) ? 'yes, fire' : 'fire', sure('fire', n) ? 'red' : ''); }
+  else if (has(i, 'fired') || has(i, 'rejected')) h += B('rehire', n, has(i, 'fired') ? 'rehire' : 'hire after all', 'green');
+  else if (i.state === 'open') h += B('hire', n, 'hire', 'green') + B('reject', n, sure('reject', n) ? 'yes, reject' : 'reject', sure('reject', n) ? 'red' : '');
+  if (st !== 'blacklisted') h += B('blacklist', n, sure('blacklist', n) ? 'yes, blacklist' : 'blacklist', sure('blacklist', n) ? 'red' : '');
+  return `<div class="acts">${h}<a class="b" href="${esc(i.html_url)}" target="_blank" rel="noopener">open on GitHub</a></div>`;
 }
-function details(i) {
-  const made = safeUrl(field(i.body, 'Something they made'));
-  const why = ((i.body || '').split('**Why they want to work for kai.fun:**')[1] || '').split('\n- [')[0].replace(/^\s*>\s?/gm, '').trim();
-  const gh = ghOf(i), progs = progsBy(gh), hist = history(i);
-  return `<dl><dt>Name</dt><dd>${esc(field(i.body, 'Name'))}</dd><dt>Email</dt><dd>${esc(field(i.body, 'Email'))}</dd><dt>GitHub</dt><dd><a href="https://github.com/${esc(gh)}" target="_blank" rel="noopener nofollow">@${esc(gh)}</a></dd>
+function appDetails(i) {
+  const made = safeUrl(field(i.body, 'Something they made')), P = personOf(i), gh = HR.appGh(i);
+  const why = ((i.body || '').split('**Why they want to work for kai.fun:**')[1] || '').split('\n- [')[0].replace(/^\s*>\s?/gm, '').trim(), hist = history(i);
+  const progs = P ? P.progs : [];
+  return `<dl><dt>Name</dt><dd>${esc(field(i.body, 'Name'))}</dd><dt>Email</dt><dd>${esc(field(i.body, 'Email'))}</dd><dt>GitHub</dt><dd><a href="https://github.com/${esc(gh)}" target="_blank" rel="noopener nofollow">@${esc(gh)}</a>${i.user.login.toLowerCase() !== gh ? ` <span class="flag">(sent by @${esc(i.user.login)}, not them)</span>` : ''}</dd>
     <dt>Experience</dt><dd>${esc(field(i.body, 'Experience'))}</dd><dt>Languages</dt><dd>${esc(field(i.body, 'Programs in'))}</dd>
     <dt>Made</dt><dd>${made ? `<a href="${esc(made)}" target="_blank" rel="noopener nofollow">${esc(made)}</a>` : esc(field(i.body, 'Something they made'))}</dd>
-    <dt>First program</dt><dd>${esc(field(i.body, "First program they'd make"))}</dd><dt>Applied</dt><dd>${esc(fmtD(i.created_at))}</dd></dl>
+    <dt>First program</dt><dd>${esc(field(i.body, "First program they'd make"))}</dd><dt>Applied</dt><dd>${esc(fmtD(i.created_at))}</dd>${P && (P.status === 'employee' || P.status === 'fired') ? `<dt>KaiBucks earned</dt><dd>${P.kb} KB</dd>` : ''}</dl>
     ${why ? `<blockquote>${esc(why)}</blockquote>` : ''}
     ${hist.length ? `<ul class="hist">${hist.map(h => `<li>${esc(fmtD(h.when))}: ${esc(h.what)}</li>`).join('')}</ul>` : ''}
-    ${progs.length ? `<p class="note" style="margin-top:8px"><b>Programs (${progs.length}):</b> ${progs.slice(0, 8).map(p => { const u = safeUrl(field(p.body, 'Program')); return u ? `<a href="${esc(u)}" target="_blank" rel="noopener nofollow">${esc(fmtD(p.created_at))}</a>` : esc(fmtD(p.created_at)); }).join(' · ')}</p>` : ''}`;
+    ${progs.length ? `<p class="note" style="margin-top:8px"><b>Programs (${progs.length}):</b> ${progs.slice(0, 10).map(p => `<a href="${esc(p.html_url)}" target="_blank" rel="noopener">${esc(fmtD(p.created_at))}</a>${HR.progVerified(p) ? '' : ' <span class="flag">unverified</span>'}`).join(' · ')}</p>` : ''}`;
+}
+function progCard(p) {
+  const P = M.people[HR.progGh(p)], ok = HR.progVerified(p), counted = !has(p, 'not counted'), u = safeUrl(field(p.body, 'Program')), code = codeOf(p);
+  const st = P ? P.status : 'none', warn = !ok || st === 'blacklisted' || (st !== 'employee' && st !== 'fired');
+  const flags = [!ok ? `posted by @${esc(p.user.login)}, not @${esc(HR.progGh(p))}, so it doesn't count` : '', st === 'blacklisted' ? 'from a blacklisted account' : '', st !== 'employee' && st !== 'fired' && st !== 'blacklisted' ? "from someone who isn't hired" : '', !counted ? 'marked "not counted"' : ''].filter(Boolean);
+  return `<div class="card ${warn ? 'warn' : ''}"><div class="hd"><h3>${esc(p.title)}</h3><span class="note">${esc(fmtD(p.created_at))}</span></div>
+    <dl><dt>From</dt><dd>@${esc(HR.progGh(p))}</dd><dt>Program</dt><dd>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener nofollow">${esc(u)}</a>` : esc(field(p.body, 'Program'))}</dd><dt>What it does</dt><dd>${esc(field(p.body, 'What it does'))}</dd>${field(p.body, 'Tested') ? `<dt>Tested</dt><dd>${esc(field(p.body, 'Tested'))}</dd>` : ''}</dl>
+    ${flags.length ? `<p class="flag" style="margin-top:6px">⚠ ${flags.join(' · ')}</p>` : ''}
+    <div class="acts">${code ? `<button class="b dark" data-run="${p.number}">▶ run the code</button>` : ''}${counted ? B('nocount', p.number, "don't count it") : B('count', p.number, 'count it again')}<a class="b" href="${esc(p.html_url)}" target="_blank" rel="noopener">open on GitHub</a></div></div>`;
 }
 function render() {
-  const apps = issues.filter(isApp), emps = apps.filter(isEmp), fired = apps.filter(isFired), progs = issues.filter(isProg), news = apps.filter(isNewApp);
-  const wk = weekKey(new Date()), handed = new Set(progs.filter(p => weekKey(p.created_at) === wk).map(p => (field(p.body, 'From').replace(/^@/, '') || p.user.login).toLowerCase()));
-  const missing = emps.filter(e => !handed.has(ghOf(e)));
-  $('#stats').innerHTML = [['employees', emps.length], ['new applications', news.length], ['handed in this week', emps.length - missing.length], ['missing this week', missing.length], ['fired', fired.length]].map(([k, v]) => `<div class="stat"><small>${k}</small><b>${v}</b></div>`).join('');
-  const tabs = [['employees', `employees (${emps.length})`], ['new', `applications (${news.length})`], ['missing', `missing this week (${missing.length})`], ['programs', `programs (${progs.length})`], ['fired', `fired (${fired.length})`], ['all', 'everything']];
+  const ppl = Object.values(M.people), emps = ppl.filter(p => p.status === 'employee'), fired = ppl.filter(p => p.status === 'fired'), black = ppl.filter(p => p.status === 'blacklisted');
+  const news = M.apps.filter(i => i.state === 'open' && !has(i, 'hired') && !has(i, 'fired') && !has(i, 'rejected') && !has(i, 'blacklisted') && personOf(i) && personOf(i).status === 'applied');
+  const missing = emps.filter(p => !p.thisWeek), kbTotal = emps.reduce((a, p) => a + p.kb, 0);
+  $('#stats').innerHTML = [['employees', emps.length], ['new applications', news.length], ['missing this week', missing.length], ['KaiBucks paid', kbTotal + ' KB'], ['US dollars paid', '$0'], ['blacklisted', black.length]].map(([k, v]) => `<div class="stat"><small>${k}</small><b>${v}</b></div>`).join('');
+  const tabs = [['employees', `employees (${emps.length})`], ['new', `applications (${news.length})`], ['missing', `missing this week (${missing.length})`], ['programs', `programs (${M.progs.length})`], ['fired', `fired (${fired.length})`], ['black', `blacklist (${black.length})`]];
   $('#tabs').innerHTML = tabs.map(([k, l]) => `<button class="b ${tab === k ? 'on' : ''}" data-tab="${k}">${l}</button>`).join('');
   const L = $('#list');
   if (tab === 'employees' || tab === 'missing') {
-    const list = (tab === 'missing' ? missing : emps).slice().sort((a, b) => rankOf(b) - rankOf(a) || (field(a.body, 'Name') || '').localeCompare(field(b.body, 'Name') || ''));
+    const list = (tab === 'missing' ? missing : emps).slice().sort((a, b) => b.rank - a.rank || b.kb - a.kb);
     if (!list.length) { L.innerHTML = `<div class="empty">${tab === 'missing' ? 'Everyone has handed in a program this week. 🎉' : 'No employees yet. Hire someone from the "applications" tab.'}</div>`; return; }
-    L.innerHTML = `<div class="tablewrap"><table><thead><tr><th>Name</th><th>Rank</th><th class="hide-sm">GitHub</th><th class="hide-sm">Email</th><th class="hide-sm">Hired</th><th>Programs</th><th>This week</th></tr></thead><tbody>` + list.map(i => {
-      const gh = ghOf(i), pr = progsBy(gh), r = rankOf(i), o = open.has(i.number);
-      return `<tr class="emp" data-open="${i.number}"><td><b>${esc(field(i.body, 'Name') || '@' + gh)}</b></td><td><span class="rank r${r}">${esc(RANKS[r])}</span></td><td class="hide-sm">@${esc(gh)}</td><td class="hide-sm">${esc(field(i.body, 'Email'))}</td><td class="hide-sm">${esc(fmtD(hiredOn(i)) || '—')}</td><td>${pr.length}${pr[0] ? `<div class="note">last ${esc(fmtD(pr[0].created_at))}</div>` : ''}</td><td>${handed.has(gh) ? '<span class="wk-yes">✓ in</span>' : '<span class="wk-no">✗ missing</span>'}</td></tr>`
-        + (o ? `<tr class="more"><td colspan="7">${details(i)}${actions(i)}</td></tr>` : '');
-    }).join('') + '</tbody></table></div><p class="note" style="margin-top:8px">Click someone to see all their info, promote them, or fire them.</p>';
+    L.innerHTML = `<div class="tablewrap"><table><thead><tr><th>Name</th><th>Rank</th><th class="hide-sm">GitHub</th><th class="hide-sm">Email</th><th class="hide-sm">Hired</th><th>Programs</th><th>KaiBucks</th><th>This week</th></tr></thead><tbody>` + list.map(P => {
+      const i = P.app, o = open.has(i.number);
+      return `<tr class="emp" data-open="${i.number}"><td><b>${esc(field(i.body, 'Name') || '@' + P.gh)}</b></td><td><span class="rank r${P.rank}">${esc(RANKS[P.rank])}</span></td><td class="hide-sm">@${esc(P.gh)}</td><td class="hide-sm">${esc(field(i.body, 'Email'))}</td><td class="hide-sm">${esc(fmtD(hiredOn(i)) || '—')}</td><td>${P.verifiedProgs.length}${P.verifiedProgs[0] ? `<div class="note">last ${esc(fmtD(P.verifiedProgs[0].created_at))}</div>` : ''}</td><td>${P.kb} KB</td><td>${P.thisWeek ? '<span class="wk-yes">✓ in</span>' : '<span class="wk-no">✗ missing</span>'}</td></tr>`
+        + (o ? `<tr class="more"><td colspan="8">${appDetails(i)}${appActions(i)}</td></tr>` : '');
+    }).join('') + '</tbody></table></div><p class="note" style="margin-top:8px">Click someone to see all their info, promote them, fire them or blacklist them.</p>';
     return;
   }
-  const list = tab === 'new' ? news : tab === 'fired' ? fired : tab === 'programs' ? progs : issues;
+  if (tab === 'black') {
+    const add = `<div class="card"><h3>Blacklist a GitHub account</h3><p class="note">They won't be able to apply, use the Employee Portal, or earn anything from programs.</p><div class="conn"><input id="blName" placeholder="GitHub username" autocomplete="off" spellcheck="false">${B('blacklistName', 0, sure('blacklistName', (window.__blName || '').trim().replace(/^@/, '').toLowerCase()) ? 'yes, blacklist' : 'blacklist', 'red')}</div></div>`;
+    const rows = black.map(P => { const src = P.apps.find(i => has(i, 'blacklisted')) || issues.find(i => HR.isBlackIssue(i) && has(i, 'blacklisted') && i.title.toLowerCase().includes('@' + P.gh));
+      return `<div class="card"><div class="hd"><h3>@${esc(P.gh)} <span class="rank black">BLACKLISTED</span></h3>${src ? `<span class="note">${esc(fmtD(src.updated_at))}</span>` : ''}</div>${P.app ? `<p class="note">${esc(field(P.app.body, 'Name'))} · ${esc(field(P.app.body, 'Email'))}</p>` : ''}<div class="acts">${src ? B('unblacklist', src.number, 'remove from blacklist') : ''}${src ? `<a class="b" href="${esc(src.html_url)}" target="_blank" rel="noopener">open on GitHub</a>` : ''}</div></div>`; }).join('');
+    L.innerHTML = add + (rows || '<div class="empty">Nobody is blacklisted.</div>');
+    const inp = $('#blName'); if (inp) { inp.value = window.__blName || ''; inp.oninput = () => { window.__blName = inp.value; }; }
+    return;
+  }
+  if (tab === 'programs') { L.innerHTML = M.progs.length ? M.progs.map(progCard).join('') : '<div class="empty">No programs handed in yet.</div>'; return; }
+  const list = tab === 'new' ? news : fired.map(P => P.apps.find(i => has(i, 'fired'))).filter(Boolean);
   if (!list.length) { L.innerHTML = '<div class="empty">Nothing here yet.</div>'; return; }
-  L.innerHTML = list.map(i => {
-    if (isProg(i)) { const u = safeUrl(field(i.body, 'Program')); return `<div class="card"><div class="hd"><h3>${esc(i.title)}</h3><span class="note">${esc(fmtD(i.created_at))}</span></div><dl><dt>From</dt><dd>@${esc(i.user.login)}</dd><dt>Program</dt><dd>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener nofollow">${esc(u)}</a>` : esc(field(i.body, 'Program'))}</dd><dt>What it does</dt><dd>${esc(field(i.body, 'What it does'))}</dd></dl><div class="acts"><a class="b" href="${esc(i.html_url)}" target="_blank" rel="noopener">open on GitHub</a></div></div>`; }
-    if (!isApp(i)) return `<div class="card"><h3>${esc(i.title)}</h3><div class="acts"><a class="b" href="${esc(i.html_url)}" target="_blank" rel="noopener">open on GitHub</a></div></div>`;
-    const st = isEmp(i) ? `<span class="rank r${rankOf(i)}">${esc(RANKS[rankOf(i)])}</span>` : isFired(i) ? '<span class="rank r4">FIRED</span>' : has(i, 'rejected') ? '<span class="rank">NOT HIRED</span>' : '<span class="rank r3">NEW</span>';
-    return `<div class="card"><div class="hd"><h3>${esc(field(i.body, 'Name') || i.title)} ${st}</h3><span class="note">applied ${esc(fmtD(i.created_at))} · @${esc(i.user.login)}</span></div>${details(i)}${actions(i)}</div>`;
-  }).join('');
+  L.innerHTML = list.map(i => { const P = personOf(i), st = has(i, 'fired') ? '<span class="rank r4">FIRED</span>' : '<span class="rank r3">NEW</span>';
+    return `<div class="card"><div class="hd"><h3>${esc(field(i.body, 'Name') || i.title)} ${st}</h3><span class="note">applied ${esc(fmtD(i.created_at))} · @${esc(i.user.login)}</span></div>${appDetails(i)}${appActions(i)}</div>`; }).join('');
 }
+function runProgram(n) {
+  const p = issues.find(x => x.number === n), code = p && codeOf(p); if (!code) return;
+  $('#runT').textContent = `RUNNING: ${p.title}`; $('#runSrc').textContent = code; $('#runF').srcdoc = code; $('#runM').classList.remove('hide');
+}
+$('#runClose').onclick = () => { $('#runM').classList.add('hide'); $('#runF').srcdoc = ''; };
+$('#runM').onclick = e => { if (e.target.id === 'runM') $('#runClose').onclick(); };
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-tab]'); if (t) { tab = t.dataset.tab; confirmKey = null; render(); return; }
-  const a = e.target.closest('[data-act]'); if (a) { e.stopPropagation(); const i = issues.find(x => x.number === +a.dataset.n); if (i) act(i, a.dataset.act); return; }
+  const rn = e.target.closest('[data-run]'); if (rn) { runProgram(+rn.dataset.run); return; }
+  const a = e.target.closest('[data-act]');
+  if (a) { e.stopPropagation(); const k = a.dataset.act;
+    if (k === 'blacklistName') { const gh = (window.__blName || '').trim().replace(/^@/, '').toLowerCase(); if (!HR.GH_RE.test(gh)) { toast("That isn't a GitHub username."); return; } act(null, k, gh); return; }
+    const i = issues.find(x => x.number === +a.dataset.n); if (i) act(i, k); return; }
   const r = e.target.closest('tr[data-open]'); if (r) { const n = +r.dataset.open; open.has(n) ? open.delete(n) : open.add(n); render(); }
 });
 $('#reload').onclick = load;

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Employee Portal · Work for kai.fun</title>
+<meta name="description" content="For kai.fun employees: see your position and KaiBucks, upgrade your office, and test and hand in your weekly HTML program.">
+<meta name="theme-color" content="#cfc7b8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root { --ink: #1d1d22; --pen: #1f3a8a; --paper: #fffef8; --rule: #d8d2c4; --desk: #cfc7b8; --red: #b3261e; --green: #1d7a46; --gold: #c9971a; }
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--desk); }
+body { font-family: "Courier Prime", "Courier New", monospace; color: var(--ink); background: var(--desk) radial-gradient(rgba(0,0,0,.05) 1px, transparent 1.5px) 0 0 / 6px 6px; min-height: 100vh; padding: 16px 12px 60px; font-size: 15px; }
+a { color: var(--ink); }
+.wrap { max-width: 1000px; margin: 0 auto; }
+.top { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.b { font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); padding: 6px 12px; box-shadow: 3px 3px 0 rgba(0,0,0,.22); text-decoration: none; display: inline-block; }
+.b:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgba(0,0,0,.22); }
+.b.dark { background: var(--ink); color: var(--paper); }
+.b.green { background: var(--green); color: #fff; border-color: var(--green); }
+.b:disabled { opacity: .4; cursor: not-allowed; }
+.sheet { background: var(--paper); padding: 22px 24px; box-shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 26px rgba(0,0,0,.16); margin-bottom: 18px; position: relative; }
+@media (max-width: 640px) { .sheet { padding: 16px 14px; } }
+.formno { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .5px; }
+h1 { font-size: clamp(22px, 4.6vw, 32px); letter-spacing: 2px; text-align: center; margin: 10px 0 4px; }
+.sub { text-align: center; font-size: 13px; letter-spacing: 1px; }
+h2 { font-size: 15px; letter-spacing: 1.5px; background: var(--ink); color: var(--paper); padding: 4px 10px; margin-bottom: 12px; }
+.note { color: #555; font-size: 13px; line-height: 1.45; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+input.line { font-family: "Caveat", cursive; color: var(--pen); font-size: 26px; border: 0; border-bottom: 2px dotted var(--rule); background: transparent; outline: none; padding: 2px 4px 0; min-width: 0; flex: 1 1 200px; }
+input.line:focus { border-bottom-color: var(--pen); }
+.who { display: flex; gap: 14px; align-items: center; }
+.who img { width: 56px; height: 56px; border: 2px solid var(--ink); background: #eee; }
+.big { font-size: 26px; font-weight: 700; }
+.ok { color: var(--green); font-weight: 700; } .bad { color: var(--red); font-weight: 700; }
+.banner { border: 4px double var(--red); color: var(--red); text-align: center; padding: 16px; font-weight: 700; font-size: 20px; letter-spacing: 1px; margin-top: 12px; }
+.banner.green { border-color: var(--green); color: var(--green); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.card { border: 2px solid var(--ink); padding: 10px 12px; }
+.card small { display: block; font-size: 11px; letter-spacing: .8px; text-transform: uppercase; }
+.card b { font-size: 22px; }
+.ladder { display: flex; gap: 4px; margin-top: 12px; flex-wrap: wrap; }
+.ladder span { flex: 1 1 110px; border: 2px solid var(--ink); text-align: center; padding: 6px 4px; font-size: 13px; font-weight: 700; background: #fff; }
+.ladder span.me { background: var(--ink); color: var(--paper); }
+.ladder span.past { background: #e9e4d8; }
+.office { width: 100%; height: auto; border: 2px solid var(--ink); background: #fffdf4; display: block; }
+.shop { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 12px; }
+.item { border: 2px solid var(--ink); padding: 8px; background: #fff; display: flex; flex-direction: column; gap: 6px; }
+.item b { font-size: 14px; } .item small { font-size: 12px; color: #555; }
+.item.owned { background: #e8f4ec; }
+textarea.code { width: 100%; min-height: 260px; font-family: ui-monospace, Consolas, "Courier New", monospace; font-size: 14px; line-height: 1.45; border: 2px solid var(--ink); padding: 10px; background: #1d1d22; color: #f3efe2; resize: vertical; tab-size: 2; }
+.bench { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 820px) { .bench { grid-template-columns: 1fr; } }
+iframe.run { width: 100%; height: 300px; border: 2px solid var(--ink); background: #fff; }
+.log { font-family: ui-monospace, Consolas, monospace; font-size: 13px; border: 2px dashed var(--rule); padding: 8px; min-height: 44px; margin-top: 8px; white-space: pre-wrap; background: #fff; }
+.log .e { color: var(--red); } .log .g { color: var(--green); font-weight: 700; }
+label.f { display: block; font-size: 11px; letter-spacing: .8px; text-transform: uppercase; margin-top: 10px; }
+.toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 8px 16px; font-weight: 700; opacity: 0; transition: .25s; pointer-events: none; z-index: 9; max-width: 92vw; text-align: center; }
+.toast.show { opacity: 1; }
+.hide { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="b" href="./">← application form</a><a class="b" href="https://kaifun.fun/">kai.fun</a></div>
+
+  <div class="sheet">
+    <div class="formno"><span>FORM KF-3 (rev. 11/2026)</span><span>EMPLOYEES ONLY</span></div>
+    <h1>EMPLOYEE PORTAL</h1><p class="sub">kai.fun · HUMAN RESOURCES</p>
+    <h2 style="margin-top:16px">STEP 1: LINK YOUR GITHUB ACCOUNT</h2>
+    <div id="linkBox"></div>
+  </div>
+
+  <div id="locked" class="sheet hide"></div>
+
+  <div id="emp" class="hide">
+    <div class="sheet">
+      <h2>YOUR POSITION</h2>
+      <div class="cards" id="cards"></div>
+      <div class="ladder" id="ladder"></div>
+      <p class="note" style="margin-top:10px">You earn KaiBucks for every program you hand in. Higher ranks earn more per program: <span id="rates"></span>. Get promoted by handing in good programs every week.</p>
+    </div>
+
+    <div class="sheet">
+      <h2>YOUR OFFICE</h2>
+      <svg class="office" id="office" viewBox="0 0 800 420" role="img" aria-label="Your office"></svg>
+      <p class="note" style="margin-top:8px">Spend KaiBucks to upgrade your office. Upgrades are saved on this device. Exchange rate: <b>$1 = 0 KB</b>. KaiBucks can't be bought with real money (and can't be turned into it).</p>
+      <div class="shop" id="shop"></div>
+    </div>
+
+    <div class="sheet">
+      <h2>STEP 2: TEST AND HAND IN THIS WEEK'S PROGRAM</h2>
+      <p class="note">Write or paste your HTML (CSS and JavaScript inside it are fine), press <b>Run</b> to test it here, and fix any errors. You can only hand it in once it runs with no errors.</p>
+      <label class="f" for="title">Program name</label><input class="line" id="title" maxlength="80" placeholder="My Cool Program">
+      <label class="f" for="what">What does it do?</label><input class="line" id="what" maxlength="200" placeholder="It says hello and has a button">
+      <div class="bench" style="margin-top:12px">
+        <div><textarea class="code" id="code" spellcheck="false" aria-label="Your HTML code"></textarea>
+          <div class="row" style="margin-top:8px"><button class="b dark" id="runB">▶ Run</button><button class="b" id="resetB">start again</button><span class="note" id="sizeN"></span></div></div>
+        <div><iframe class="run" id="frame" sandbox="allow-scripts allow-modals" title="Your program running"></iframe><div class="log" id="log">Press Run to test your program.</div></div>
+      </div>
+      <div class="row" style="margin-top:14px"><button class="b green" id="submitB" disabled>HAND IN PROGRAM</button><span class="note" id="subN">Run it with no errors first.</span></div>
+      <h2 style="margin-top:22px">NOT HTML? HAND IN A LINK INSTEAD</h2>
+      <p class="note">Made it in Scratch, Python or something else? Put a link people can open (a Scratch project, a GitHub repo, a website…).</p>
+      <label class="f" for="lnk">Link to the program</label><input class="line" id="lnk" maxlength="300" placeholder="https://">
+      <div class="row" style="margin-top:10px"><button class="b" id="linkSubmitB">HAND IN LINK</button><span class="note" id="lnkN"></span></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="hr.js"></script>
+<script>
+const $ = s => document.querySelector(s), esc = HR.esc;
+function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 3200); }
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }, del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
+let me = store.get('workfor.me', null), P = null, ghUser = null;
+
+// ---------------------------------------------------------------- linking
+function drawLink() {
+  const box = $('#linkBox');
+  if (me && ghUser) {
+    box.innerHTML = `<div class="who"><img src="${esc(ghUser.avatar_url)}&s=112" alt=""><div><div class="big">@${esc(ghUser.login)}</div><div class="ok">✓ GitHub account linked</div></div><div style="margin-left:auto"><button class="b" id="unlink">unlink</button></div></div>
+      <p class="note" style="margin-top:8px">When you hand in a program, GitHub opens and posts it from your account. That's how kai.fun knows it's really you: programs posted from a different account don't count.</p>`;
+    $('#unlink').onclick = () => { store.del('workfor.me'); me = null; ghUser = null; P = null; drawLink(); show(); };
+    return;
+  }
+  box.innerHTML = `<div class="row"><input class="line" id="ghIn" maxlength="39" placeholder="your GitHub username" autocomplete="off" spellcheck="false"><button class="b dark" id="linkB">link account</button></div>
+    <p class="note" style="margin-top:8px">Use the same GitHub account you applied with. No password needed: everything you hand in is posted from your own GitHub account, so nobody else can hand in programs as you.</p>`;
+  $('#linkB').onclick = () => link($('#ghIn').value);
+  $('#ghIn').addEventListener('keydown', e => { if (e.key === 'Enter') link($('#ghIn').value); });
+}
+async function link(name) {
+  name = String(name || '').trim().replace(/^@/, '');
+  if (!HR.GH_RE.test(name)) { toast("That isn't a GitHub username."); return; }
+  try {
+    const r = await fetch(`https://api.github.com/users/${encodeURIComponent(name)}`, { headers: { Accept: 'application/vnd.github+json' } });
+    if (r.status === 404) { toast(`There's no GitHub account called @${name}.`); return; }
+    if (!r.ok) throw new Error('GitHub error ' + r.status);
+    ghUser = await r.json(); me = ghUser.login; store.set('workfor.me', me);
+    drawLink(); await refresh();
+  } catch (e) { toast(e.message); }
+}
+
+// ---------------------------------------------------------------- status
+async function refresh() {
+  if (!me) { show(); return; }
+  try { const m = HR.model(await HR.fetchIssues()); P = m.people[me.toLowerCase()] || { gh: me.toLowerCase(), status: 'none', rank: 0, progs: [], verifiedProgs: [], kb: 0, apps: [] }; }
+  catch (e) { P = null; $('#locked').classList.remove('hide'); $('#locked').innerHTML = `<div class="banner">Couldn't reach GitHub: ${esc(e.message)}</div>`; return; }
+  show();
+}
+function show() {
+  const L = $('#locked'), E = $('#emp');
+  if (!me || !P) { L.classList.add('hide'); E.classList.add('hide'); return; }
+  if (P.status !== 'employee') {
+    E.classList.add('hide'); L.classList.remove('hide');
+    const msg = {
+      blacklisted: ['YOU ARE BLACKLISTED', 'This GitHub account has been blacklisted by kai.fun. You can\'t apply, work, or hand in programs.'],
+      fired: ['YOU WERE FIRED', 'You no longer work at kai.fun. You can fill out a new application if you want your job back.'],
+      rejected: ['APPLICATION NOT ACCEPTED', 'Your application wasn\'t accepted this time. You can apply again.'],
+      applied: ['APPLICATION RECEIVED, NOT HIRED YET', 'Your application is waiting for the admin. Check back soon.'],
+      none: ['NOT AN EMPLOYEE', 'There\'s no application from this GitHub account yet. Fill out the application form first.'],
+    }[P.status];
+    L.innerHTML = `<div class="banner ${P.status === 'applied' ? 'green' : ''}">${msg[0]}</div><p class="note" style="margin-top:10px;text-align:center">${msg[1]}</p>${P.status !== 'blacklisted' && P.status !== 'applied' ? '<p style="text-align:center;margin-top:12px"><a class="b dark" href="./">fill out an application</a></p>' : ''}`;
+    return;
+  }
+  L.classList.add('hide'); E.classList.remove('hide');
+  const spent = owned().reduce((a, id) => a + (ITEMS.find(i => i.id === id) || { cost: 0 }).cost, 0), bal = P.kb - spent;
+  $('#cards').innerHTML = [['position', HR.RANKS[P.rank]], ['pay', '−$0.00 / wk'], ['KaiBucks', `${bal} KB`], ['programs handed in', P.verifiedProgs.length], ['this week', P.thisWeek ? '✓ handed in' : '✗ not yet']]
+    .map(([k, v]) => `<div class="card"><small>${k}</small><b class="${k === 'this week' ? (P.thisWeek ? 'ok' : 'bad') : ''}">${esc(v)}</b></div>`).join('');
+  $('#ladder').innerHTML = HR.RANKS.map((r, i) => `<span class="${i === P.rank ? 'me' : i < P.rank ? 'past' : ''}">${i === P.rank ? '★ ' : ''}${esc(r)}</span>`).join('');
+  $('#rates').textContent = HR.RANKS.map((r, i) => `${r} ${HR.KB_PER_PROGRAM[i]} KB`).join(', ');
+  drawOffice(); drawShop(bal);
+}
+
+// ---------------------------------------------------------------- the office
+const ITEMS = [
+  { id: 'chair', name: 'Office chair', cost: 5 }, { id: 'plant', name: 'Pot plant', cost: 8 }, { id: 'desk', name: 'A real desk', cost: 12 }, { id: 'rug', name: 'Rug', cost: 10 },
+  { id: 'poster', name: 'Motivational poster', cost: 12 }, { id: 'lamp', name: 'Desk lamp', cost: 15 }, { id: 'clock', name: 'Wall clock', cost: 18 }, { id: 'computer', name: 'Computer', cost: 20 },
+  { id: 'nameplate', name: 'Name plate', cost: 25 }, { id: 'window', name: 'Window', cost: 30 }, { id: 'coffee', name: 'Coffee machine', cost: 35 }, { id: 'shelf', name: 'Bookshelf', cost: 40 },
+  { id: 'monitor2', name: 'Second monitor', cost: 45, needs: 'computer' }, { id: 'trophy', name: 'Trophy', cost: 60, needs: 'shelf' }, { id: 'fish', name: 'Fish tank', cost: 80 },
+  { id: 'gaming', name: 'Gaming chair', cost: 100, needs: 'chair' }, { id: 'view', name: 'City view', cost: 250, needs: 'window' }, { id: 'stapler', name: 'Golden stapler', cost: 500, needs: 'desk' },
+];
+const owned = () => me ? store.get('workfor.office.' + me.toLowerCase(), []) : [];
+function buy(it, bal) {
+  if (it.needs && !owned().includes(it.needs)) { toast(`You need the ${ITEMS.find(i => i.id === it.needs).name.toLowerCase()} first.`); return; }
+  if (bal < it.cost) { toast(`That costs ${it.cost} KB. You have ${bal} KB. Hand in more programs!`); return; }
+  store.set('workfor.office.' + me.toLowerCase(), [...owned(), it.id]); toast(`Bought: ${it.name}!`); show();
+}
+function drawShop(bal) {
+  const o = owned();
+  $('#shop').innerHTML = ITEMS.map(it => { const got = o.includes(it.id); return `<div class="item ${got ? 'owned' : ''}"><b>${esc(it.name)}</b><small>${got ? 'in your office' : it.cost + ' KB' + (it.needs ? ' · needs ' + ITEMS.find(i => i.id === it.needs).name.toLowerCase() : '')}</small>${got ? '' : `<button class="b" data-buy="${it.id}" ${bal < it.cost ? 'disabled' : ''}>buy</button>`}</div>`; }).join('');
+  $('#shop').querySelectorAll('[data-buy]').forEach(b => b.onclick = () => buy(ITEMS.find(i => i.id === b.dataset.buy), bal));
+}
+function drawOffice() {
+  const o = new Set(owned()), I = '#1d1d22', W = '#fffef8', svg = [];
+  const now = new Date(), hr = now.getHours() % 12 + now.getMinutes() / 60, mn = now.getMinutes();
+  svg.push(`<rect x="0" y="0" width="800" height="300" fill="#f4efe2"/><rect x="0" y="300" width="800" height="120" fill="#e2d8c4"/><line x1="0" y1="300" x2="800" y2="300" stroke="${I}" stroke-width="3"/>`);
+  for (let x = 0; x < 800; x += 60) svg.push(`<line x1="${x}" y1="300" x2="${x - 40}" y2="420" stroke="#cdbfa6" stroke-width="2"/>`);
+  if (o.has('window')) {
+    svg.push(`<rect x="300" y="40" width="200" height="140" fill="${o.has('view') ? '#dde7f2' : '#e6f0f7'}" stroke="${I}" stroke-width="4"/>`);
+    if (o.has('view')) [[310, 120, 30, 60], [345, 90, 26, 90], [375, 110, 34, 70], [415, 70, 28, 110], [450, 100, 40, 80]].forEach(([x, y, w, h]) => { svg.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#b7c3d3" stroke="${I}" stroke-width="2"/>`); for (let yy = y + 8; yy < y + h - 6; yy += 14) svg.push(`<rect x="${x + 6}" y="${yy}" width="6" height="6" fill="#fff6b0"/><rect x="${x + w - 12}" y="${yy}" width="6" height="6" fill="#fff6b0"/>`); });
+    else svg.push(`<ellipse cx="350" cy="90" rx="28" ry="12" fill="#fff" stroke="${I}" stroke-width="2"/><ellipse cx="440" cy="120" rx="34" ry="13" fill="#fff" stroke="${I}" stroke-width="2"/>`);
+    svg.push(`<line x1="400" y1="40" x2="400" y2="180" stroke="${I}" stroke-width="4"/><line x1="300" y1="110" x2="500" y2="110" stroke="${I}" stroke-width="4"/><rect x="290" y="178" width="220" height="10" fill="${W}" stroke="${I}" stroke-width="3"/>`);
+  }
+  if (o.has('poster')) svg.push(`<g transform="rotate(-3 130 110)"><rect x="80" y="50" width="110" height="140" fill="${W}" stroke="${I}" stroke-width="3"/><text x="135" y="105" text-anchor="middle" font-family="Courier Prime" font-weight="700" font-size="20" fill="${I}">SHIP</text><text x="135" y="130" text-anchor="middle" font-family="Courier Prime" font-weight="700" font-size="20" fill="${I}">IT!</text><text x="135" y="170" text-anchor="middle" font-family="Courier Prime" font-size="11" fill="${I}">1 program a week</text></g>`);
+  if (o.has('clock')) { const ha = hr / 12 * 6.283 - 1.571, ma = mn / 60 * 6.283 - 1.571; svg.push(`<circle cx="620" cy="80" r="34" fill="${W}" stroke="${I}" stroke-width="4"/><line x1="620" y1="80" x2="${620 + Math.cos(ha) * 18}" y2="${80 + Math.sin(ha) * 18}" stroke="${I}" stroke-width="4" stroke-linecap="round"/><line x1="620" y1="80" x2="${620 + Math.cos(ma) * 26}" y2="${80 + Math.sin(ma) * 26}" stroke="${I}" stroke-width="2.5" stroke-linecap="round"/>`); }
+  if (o.has('shelf')) { svg.push(`<rect x="660" y="140" width="120" height="200" fill="#d9c29a" stroke="${I}" stroke-width="3"/>`); [180, 230, 280].forEach(y => svg.push(`<line x1="660" y1="${y}" x2="780" y2="${y}" stroke="${I}" stroke-width="3"/>`)); [[668, 150], [684, 154], [700, 148], [668, 240], [690, 238], [712, 244], [740, 290], [756, 286]].forEach(([x, y], k) => svg.push(`<rect x="${x}" y="${y}" width="14" height="${(y < 200 ? 180 : y < 260 ? 280 : 330) - y}" fill="${['#c9d6ea', '#f0c9c0', '#cfe8d2', '#efe0a8'][k % 4]}" stroke="${I}" stroke-width="2"/>`));
+    if (o.has('trophy')) svg.push(`<path d="M728 196 h30 v10 q0 14 -15 16 q-15 -2 -15 -16 z" fill="#e8c14a" stroke="${I}" stroke-width="2.5"/><rect x="738" y="222" width="10" height="4" fill="${I}"/><rect x="732" y="226" width="22" height="4" fill="#e8c14a" stroke="${I}" stroke-width="2"/>`); }
+  if (o.has('rug')) svg.push(`<ellipse cx="330" cy="370" rx="200" ry="36" fill="#e9b9a5" stroke="${I}" stroke-width="3"/><ellipse cx="330" cy="370" rx="150" ry="24" fill="none" stroke="${I}" stroke-width="2" stroke-dasharray="6 6"/>`);
+  if (o.has('plant')) svg.push(`<path d="M40 340 h50 l-8 50 h-34 z" fill="#d38b5d" stroke="${I}" stroke-width="3"/><path d="M65 340 q-30 -50 -10 -90 M65 340 q10 -60 40 -80 M65 340 q-5 -40 -40 -60" fill="none" stroke="#2f7a46" stroke-width="5" stroke-linecap="round"/><ellipse cx="55" cy="252" rx="10" ry="18" fill="#58a86b" stroke="${I}" stroke-width="2"/><ellipse cx="104" cy="262" rx="18" ry="9" fill="#58a86b" stroke="${I}" stroke-width="2"/><ellipse cx="26" cy="282" rx="16" ry="8" fill="#58a86b" stroke="${I}" stroke-width="2"/>`);
+  if (o.has('fish')) svg.push(`<rect x="560" y="250" width="90" height="10" fill="#8b6f47" stroke="${I}" stroke-width="2"/><rect x="566" y="260" width="8" height="80" fill="#8b6f47" stroke="${I}" stroke-width="2"/><rect x="636" y="260" width="8" height="80" fill="#8b6f47" stroke="${I}" stroke-width="2"/><rect x="556" y="190" width="98" height="60" fill="#bfe3f2" stroke="${I}" stroke-width="3"/><g><animateTransform attributeName="transform" type="translate" values="0 0;40 4;0 0" dur="6s" repeatCount="indefinite"/><path d="M572 215 q10 -8 20 0 q-10 8 -20 0 z M592 215 l7 -6 v12 z" fill="#f08a3c" stroke="${I}" stroke-width="1.5"/></g><path d="M600 248 q4 -16 0 -28 M620 248 q-4 -12 0 -22" fill="none" stroke="#2f7a46" stroke-width="3"/>`);
+  if (o.has('coffee')) svg.push(`<rect x="590" y="290" width="40" height="50" fill="#555" stroke="${I}" stroke-width="3"/><rect x="598" y="300" width="24" height="10" fill="#9cd" stroke="${I}" stroke-width="2"/><rect x="602" y="320" width="16" height="14" fill="${W}" stroke="${I}" stroke-width="2"/><path d="M606 314 q4 -8 0 -16 M614 314 q4 -8 0 -16" fill="none" stroke="#999" stroke-width="2"><animate attributeName="opacity" values="1;.2;1" dur="2s" repeatCount="indefinite"/></path>`);
+  // desk area
+  if (o.has('desk')) svg.push(`<rect x="200" y="250" width="270" height="16" fill="#b98a56" stroke="${I}" stroke-width="3"/><rect x="210" y="266" width="14" height="90" fill="#a7784a" stroke="${I}" stroke-width="3"/><rect x="446" y="266" width="14" height="90" fill="#a7784a" stroke="${I}" stroke-width="3"/><rect x="360" y="266" width="86" height="50" fill="#b98a56" stroke="${I}" stroke-width="3"/><line x1="370" y1="291" x2="436" y2="291" stroke="${I}" stroke-width="2"/>`);
+  else svg.push(`<rect x="240" y="280" width="120" height="70" fill="#d8b98a" stroke="${I}" stroke-width="3"/><line x1="240" y1="300" x2="360" y2="300" stroke="${I}" stroke-width="2"/><text x="300" y="332" text-anchor="middle" font-family="Courier Prime" font-size="13" fill="${I}">this way up ↑</text>`);
+  const deskY = o.has('desk') ? 250 : 280;
+  if (o.has('computer')) svg.push(`<rect x="270" y="${deskY - 78}" width="96" height="64" fill="#222" stroke="${I}" stroke-width="3"/><rect x="276" y="${deskY - 72}" width="84" height="52" fill="#cfe8ff"/><text x="282" y="${deskY - 54}" font-family="Courier Prime" font-size="11" fill="#1f3a8a">&lt;html&gt;</text><text x="290" y="${deskY - 40}" font-family="Courier Prime" font-size="11" fill="#1d7a46">hello!</text><rect x="310" y="${deskY - 14}" width="16" height="14" fill="#444"/><rect x="290" y="${deskY - 4}" width="56" height="5" fill="#444"/>`);
+  if (o.has('monitor2')) svg.push(`<rect x="372" y="${deskY - 70}" width="76" height="56" fill="#222" stroke="${I}" stroke-width="3"/><rect x="378" y="${deskY - 64}" width="64" height="44" fill="#e8ffe0"/><polyline points="382,${deskY - 26} 396,${deskY - 40} 410,${deskY - 32} 424,${deskY - 52} 438,${deskY - 44}" fill="none" stroke="#1d7a46" stroke-width="3"/><rect x="404" y="${deskY - 14}" width="12" height="14" fill="#444"/>`);
+  if (o.has('lamp')) svg.push(`<path d="M430 ${deskY} h24 v-6 h-24 z M442 ${deskY - 6} l-14 -40 l20 -16" fill="none" stroke="${I}" stroke-width="4"/><path d="M440 ${deskY - 70} l26 4 l-6 22 z" fill="#ffd45a" stroke="${I}" stroke-width="3"/>`);
+  if (o.has('nameplate')) svg.push(`<path d="M214 ${deskY} l8 -22 h86 l8 22 z" fill="#e8c14a" stroke="${I}" stroke-width="2.5"/><text x="265" y="${deskY - 6}" text-anchor="middle" font-family="Courier Prime" font-weight="700" font-size="10" fill="${I}">@${esc(me)}</text><text x="265" y="${deskY + 14}" text-anchor="middle" font-family="Courier Prime" font-size="10" fill="${I}">${esc(HR.RANKS[P.rank])}</text>`);
+  if (o.has('stapler')) svg.push(`<path d="M220 ${deskY - 6} h34 l4 6 h-38 z" fill="#f1c83a" stroke="${I}" stroke-width="2"/><path d="M226 ${deskY - 12} h22" stroke="#fff3b0" stroke-width="3"/><text x="258" y="${deskY - 14}" font-size="12" fill="${'#c9971a'}">✦</text>`);
+  if (o.has('gaming')) svg.push(`<rect x="292" y="250" width="52" height="70" rx="10" fill="#b3261e" stroke="${I}" stroke-width="3"/><rect x="302" y="262" width="32" height="18" fill="#1d1d22"/><rect x="286" y="318" width="64" height="14" rx="5" fill="#b3261e" stroke="${I}" stroke-width="3"/><line x1="318" y1="332" x2="318" y2="372" stroke="${I}" stroke-width="5"/><line x1="296" y1="378" x2="340" y2="378" stroke="${I}" stroke-width="5"/>`);
+  else if (o.has('chair')) svg.push(`<rect x="296" y="268" width="44" height="50" fill="#6f7d8c" stroke="${I}" stroke-width="3"/><rect x="290" y="316" width="56" height="12" fill="#6f7d8c" stroke="${I}" stroke-width="3"/><line x1="318" y1="328" x2="318" y2="368" stroke="${I}" stroke-width="5"/><line x1="298" y1="374" x2="338" y2="374" stroke="${I}" stroke-width="5"/>`);
+  if (!o.size) svg.push(`<text x="400" y="230" text-anchor="middle" font-family="Caveat" font-size="34" fill="#888">your office is a cardboard box. buy something!</text>`);
+  $('#office').innerHTML = svg.join('');
+}
+
+// ---------------------------------------------------------------- the code bench
+const STARTER = `<!doctype html>
+<html>
+<body>
+  <h1>Hello from my program!</h1>
+  <button id="b">Click me</button>
+  <script>
+    document.getElementById('b').onclick = () => {
+      document.getElementById('b').textContent = 'You clicked me!';
+    };
+  <\/script>
+</body>
+</html>`;
+const code = $('#code');
+code.value = store.get('workfor.draft', STARTER);
+let tested = false, runId = 0, errs = [], runTimer = 0;
+function setTested(v, msg) { tested = v; $('#submitB').disabled = !v; $('#subN').textContent = msg || (v ? 'It works. Ready to hand in.' : 'Run it with no errors first.'); }
+function size() { const n = new Blob([code.value]).size; $('#sizeN').textContent = `${n.toLocaleString()} bytes`; }
+code.addEventListener('input', () => { store.set('workfor.draft', code.value); if (tested) setTested(false, 'You changed the code. Run it again.'); size(); });
+code.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); const s = code.selectionStart; code.setRangeText('  ', s, code.selectionEnd, 'end'); code.dispatchEvent(new Event('input')); } });
+size();
+$('#resetB').onclick = () => { code.value = STARTER; code.dispatchEvent(new Event('input')); };
+function logHTML() {
+  const L = $('#log');
+  if (errs.length) L.innerHTML = errs.map(e => `<div class="e">✗ ${esc(e)}</div>`).join('');
+}
+$('#runB').onclick = () => {
+  runId++; errs = []; const id = runId; clearTimeout(runTimer);
+  $('#log').textContent = 'Running…';
+  const catcher = `<script>(function(){var I=${id};function s(t,m){try{parent.postMessage({kfRun:I,type:t,msg:String(m)},'*')}catch(e){}}
+window.addEventListener('error',function(e){s('error',(e.message||'Error')+(e.lineno?' (line '+e.lineno+')':''))});
+window.addEventListener('unhandledrejection',function(e){s('error','Unhandled promise: '+(e.reason&&e.reason.message||e.reason))});
+var ce=console.error;console.error=function(){s('error','console.error: '+[].join.call(arguments,' '));ce.apply(console,arguments)};
+window.addEventListener('load',function(){s('loaded','')});})();<\/script>`;
+  $('#frame').srcdoc = catcher + code.value;
+  runTimer = setTimeout(() => {
+    if (id !== runId) return;
+    if (errs.length) { logHTML(); setTested(false, `Fix ${errs.length} error${errs.length > 1 ? 's' : ''} and run it again.`); }
+    else if (!code.value.trim()) { $('#log').innerHTML = '<div class="e">✗ There\'s no code.</div>'; setTested(false); }
+    else { $('#log').innerHTML = '<div class="g">✓ It ran with no errors. Try it out in the box above!</div>'; setTested(true); }
+  }, 1600);
+};
+addEventListener('message', e => {
+  const d = e.data; if (!d || d.kfRun !== runId || e.source !== $('#frame').contentWindow) return;
+  if (d.type === 'error') { errs.push(d.msg); logHTML(); setTested(false, 'There are errors.'); }
+});
+function fence(s) { let n = 3; const runs = s.match(/`+/g) || []; runs.forEach(r => { if (r.length >= n) n = r.length + 1; }); return '`'.repeat(n); }
+$('#submitB').onclick = async () => {
+  if (!tested || !P || P.status !== 'employee') return;
+  const title = $('#title').value.trim() || 'My program', what = $('#what').value.trim() || 'not said', wk = HR.weekNo(new Date()), f = fence(code.value);
+  const body = [`**From:** @${me}`, `**Week:** ${wk} of ${new Date().getFullYear()}`, `**Program:** ${title} (HTML code below)`, `**What it does:** ${what}`, '**Tested:** ran in the employee portal with no errors', '', f + 'html', code.value, f, '', `_Form KF-3, handed in from workfor.kaifun.fun/worker.html on ${new Date().toISOString().slice(0, 10)}_`].join('\n');
+  const t = `Program: week ${wk} (@${me})`;
+  let url = `https://github.com/${HR.REPO}/issues/new?title=${encodeURIComponent(t)}&body=${encodeURIComponent(body)}`;
+  if (url.length > 7500) {
+    try { await navigator.clipboard.writeText(body); } catch (e) {}
+    url = `https://github.com/${HR.REPO}/issues/new?title=${encodeURIComponent(t)}&body=${encodeURIComponent('PASTE HERE: your program was too big to fill in automatically, so it has been copied. Delete this line and paste (Ctrl+V).')}`;
+    toast('Your program is big, so it was copied. Paste it into the box on GitHub.');
+  }
+  window.open(url, '_blank', 'noopener');
+  $('#subN').innerHTML = 'GitHub opened. Press <b>Create</b> there to hand it in. It counts once it shows up (refresh this page).';
+};
+
+$('#linkSubmitB').onclick = () => {
+  if (!P || P.status !== 'employee') return;
+  const l = $('#lnk').value.trim(), what = $('#what').value.trim(), wk = HR.weekNo(new Date());
+  if (!HR.safeUrl(l)) { $('#lnkN').textContent = 'Put a link that starts with https://'; return; }
+  if (!what) { $('#lnkN').textContent = 'Fill in "What does it do?" above too.'; return; }
+  const body = [`**From:** @${me}`, `**Week:** ${wk} of ${new Date().getFullYear()}`, `**Program:** ${l}`, `**What it does:** ${what}`, '', `_Form KF-3, handed in from workfor.kaifun.fun/worker.html on ${new Date().toISOString().slice(0, 10)}_`].join('\n');
+  window.open(`https://github.com/${HR.REPO}/issues/new?title=${encodeURIComponent(`Program: week ${wk} (@${me})`)}&body=${encodeURIComponent(body)}`, '_blank', 'noopener');
+  $('#lnkN').innerHTML = 'GitHub opened. Press <b>Create</b> there to hand it in.';
+};
+drawLink();
+if (me) link(me);
+</script>
+</body>
+</html>

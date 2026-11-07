@@ -3,114 +3,260 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin · Work for kai.fun</title>
+<title>HR Admin · Work for kai.fun</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#f6f1e7">
+<meta name="theme-color" content="#cfc7b8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lilita+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
-:root { --ink: #1b1530; --paper: #f6f1e7; --muted: #6f6680; --coral: #ff6b5e; --sun: #ffc93c; --teal: #1fb5a3; --line: #e5dccb; }
+:root { --ink: #1d1d22; --pen: #1f3a8a; --paper: #fffef8; --rule: #d8d2c4; --desk: #cfc7b8; --red: #b3261e; --green: #1d7a46; }
 * { box-sizing: border-box; margin: 0; }
-html { background: var(--paper); }
-body { font-family: "Fredoka", system-ui, sans-serif; color: var(--ink); background: var(--paper); min-height: 100vh; padding: 16px 16px 60px; line-height: 1.45; }
+html { background: var(--desk); }
+body { font-family: "Courier Prime", "Courier New", monospace; color: var(--ink); background: var(--desk) radial-gradient(rgba(0,0,0,.05) 1px, transparent 1.5px) 0 0 / 6px 6px; min-height: 100vh; padding: 16px 12px 60px; font-size: 15px; }
 a { color: var(--ink); }
-.wrap { max-width: 1000px; margin: 0 auto; }
-.top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
-.pill { display: inline-block; background: #fff; color: var(--ink); text-decoration: none; font-weight: 700; border: 3px solid var(--ink); border-radius: 14px; box-shadow: 0 4px 0 var(--ink); padding: 5px 13px; font-size: 15px; cursor: pointer; font-family: inherit; }
-.pill.dark { background: var(--ink); color: #fff; }
-.pill.on { background: var(--sun); }
-h1 { font-family: "Lilita One", sans-serif; font-weight: 400; font-size: clamp(34px, 6vw, 52px); margin: 24px 0 6px; }
-.note { color: var(--muted); font-size: 15px; }
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 16px 0; }
-.stat { background: #fff; border: 3px solid var(--ink); border-radius: 16px; padding: 10px 14px; box-shadow: 0 4px 0 var(--ink); }
-.stat small { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: .5px; }
-.stat b { font-size: 28px; }
-.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 16px; }
-.app { background: #fff; border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 5px 0 var(--ink); padding: 16px 18px; margin-bottom: 14px; }
-.app .hd { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
-.app h2 { font-size: 21px; }
-.tag { display: inline-block; font-size: 13px; font-weight: 700; border: 2px solid var(--ink); border-radius: 999px; padding: 1px 10px; margin-left: 6px; vertical-align: 2px; }
-.tag.hired { background: #c8f2e6; } .tag.new { background: var(--sun); } .tag.closed { background: #eee; color: #777; }
-dl { display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; margin-top: 10px; font-size: 15px; }
-dt { font-weight: 700; color: var(--muted); }
-dd { word-break: break-word; }
-blockquote { border-left: 4px solid var(--line); padding-left: 10px; margin-top: 8px; white-space: pre-wrap; font-size: 15px; }
-.acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-.empty { text-align: center; padding: 40px 10px; font-size: 18px; color: var(--muted); }
-.how { background: #fffdf8; border: 2px dashed var(--line); border-radius: 14px; padding: 12px 16px; margin-top: 16px; font-size: 15px; }
-.how li { margin: 3px 0 3px 20px; }
+.wrap { max-width: 1100px; margin: 0 auto; }
+.top { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.b { font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); padding: 5px 11px; box-shadow: 3px 3px 0 rgba(0,0,0,.22); text-decoration: none; display: inline-block; }
+.b:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgba(0,0,0,.22); }
+.b.dark { background: var(--ink); color: var(--paper); }
+.b.red { background: var(--red); color: #fff; border-color: var(--red); }
+.b.green { background: var(--green); color: #fff; border-color: var(--green); }
+.b:disabled { opacity: .4; cursor: not-allowed; }
+.b.on { background: #ffe99a; }
+.sheet { background: var(--paper); padding: 22px 24px; box-shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 26px rgba(0,0,0,.16); margin-bottom: 18px; }
+@media (max-width: 640px) { .sheet { padding: 16px 14px; } }
+h1 { font-size: clamp(22px, 4.5vw, 30px); letter-spacing: 1.5px; }
+h2 { font-size: 15px; letter-spacing: 1.5px; background: var(--ink); color: var(--paper); padding: 4px 10px; margin: 0 -2px 10px; }
+.note { color: #555; font-size: 13px; line-height: 1.45; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 14px; }
+.stat { border: 2px solid var(--ink); padding: 8px 10px; }
+.stat small { display: block; font-size: 11px; letter-spacing: .8px; text-transform: uppercase; }
+.stat b { font-size: 26px; }
+.conn { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+.conn input[type=password] { font-family: inherit; font-size: 14px; border: 2px solid var(--ink); padding: 6px 8px; min-width: 0; flex: 1 1 260px; background: #fff; }
+.ok { color: var(--green); font-weight: 700; }
+.bad { color: var(--red); font-weight: 700; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { border: 1px solid var(--ink); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { background: #efe9dc; font-size: 12px; letter-spacing: .6px; text-transform: uppercase; }
+tr.emp { cursor: pointer; }
+tr.emp:hover td { background: #fffbe8; }
+tr.more td { background: #fffdf3; }
+.rank { display: inline-block; border: 2px solid var(--ink); padding: 0 6px; font-weight: 700; font-size: 12px; white-space: nowrap; }
+.r0 { background: #fff; } .r1 { background: #e8f1ff; } .r2 { background: #dff5e6; } .r3 { background: #fff0c2; } .r4 { background: #ffd9d4; }
+.wk-yes { color: var(--green); font-weight: 700; } .wk-no { color: var(--red); font-weight: 700; }
+.card { border: 2px solid var(--ink); padding: 12px 14px; margin-bottom: 12px; background: #fff; }
+.card .hd { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.card h3 { font-size: 17px; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; margin-top: 8px; font-size: 14px; }
+dt { font-weight: 700; } dd { word-break: break-word; }
+blockquote { font-family: "Caveat", cursive; color: var(--pen); font-size: 22px; line-height: 1.15; border-left: 3px solid var(--rule); padding-left: 10px; margin-top: 8px; white-space: pre-wrap; }
+.acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.empty { text-align: center; padding: 30px 10px; color: #555; }
+.hist { margin-top: 8px; font-size: 13px; }
+.hist li { margin: 2px 0 2px 18px; }
+.toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 8px 16px; font-weight: 700; opacity: 0; transition: .25s; pointer-events: none; z-index: 9; max-width: 92vw; text-align: center; }
+.toast.show { opacity: 1; }
+.tablewrap { overflow-x: auto; }
+@media (max-width: 700px) { .hide-sm { display: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><a class="pill" href="./">← job page</a><div style="display:flex;gap:8px"><a class="pill" id="ghLink" target="_blank" rel="noopener">open on GitHub</a><button class="pill dark" id="reload">refresh</button></div></div>
-  <h1>Admin</h1>
-  <p class="note">Every application and program people send arrives here. Nothing here is secret: it's read from the public GitHub repo. To hire or reject someone, you do it on GitHub (only the repo owner can).</p>
-  <div class="stats" id="stats"></div>
-  <div class="tabs" id="tabs"></div>
-  <div id="list"><div class="empty">Loading…</div></div>
-  <div class="how">
-    <b>How to run it</b>
-    <ul>
-      <li><b>Hire someone:</b> open their application on GitHub, add the label <b>hired</b>, and leave a comment to welcome them. (GitHub emails them about your comment.)</li>
-      <li><b>Turn someone down:</b> leave a kind comment and close the issue.</li>
-      <li><b>Check the weekly programs:</b> look at the "programs" tab. Anyone hired who hasn't handed one in this week is listed under "missing this week".</li>
-      <li>GitHub emails you whenever a new application or program arrives, as long as you're watching the repo.</li>
-    </ul>
+  <div class="top"><a class="b" href="./">← application form</a><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="b" id="ghLink" target="_blank" rel="noopener">GitHub issues</a><button class="b dark" id="reload">refresh</button></div></div>
+
+  <div class="sheet">
+    <h1>HR ADMIN · kai.fun</h1>
+    <p class="note">Applications, employees, promotions and firing. Everything comes from the issues in the public <b>workfor</b> repo on GitHub.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="sheet">
+    <h2>ADMIN LOGIN (GITHUB TOKEN)</h2>
+    <div id="connBox"></div>
+    <p class="note" style="margin-top:8px">Anyone can look at this page, but only someone with a token that can edit the <b>workfor</b> repo can hire, promote or fire. The token is saved <b>only in this browser</b> and is sent only to GitHub. To make one: GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token → Repository access: only <b>workfor</b> → Permissions: <b>Issues: Read and write</b>. Never share it, and never put it in a file or a chat.</p>
+  </div>
+
+  <div class="sheet">
+    <div class="tabs" id="tabs"></div>
+    <div id="list"><div class="empty">Loading…</div></div>
   </div>
 </div>
+<div class="toast" id="toast"></div>
+
 <script>
 const REPO = 'lightningstudiosx/workfor';
+const RANKS = ['Trainee', 'Programmer', 'Senior Programmer', 'Lead Programmer', 'Head of Code'];
+const LABELS = [['hired', '1d7a46'], ['fired', 'b3261e'], ['rejected', '888888'], ...RANKS.map((r, i) => ['rank: ' + r, ['ffffff', 'cfe0ff', 'c7efd3', 'ffe59a', 'ffc4bc'][i]])];
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const safeUrl = u => /^https?:\/\//i.test(u || '') ? u : null;
+const safeUrl = u => /^https?:\/\/[^\s"'<>]+$/i.test(u || '') ? u : null;
+const fmtD = d => d ? new Date(d).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+const weekKey = d => { d = new Date(d); const j = new Date(d.getFullYear(), 0, 1); return d.getFullYear() + '-' + Math.ceil(((d - j) / 864e5 + j.getDay() + 1) / 7); };
+function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 3200); }
 $('#ghLink').href = `https://github.com/${REPO}/issues`;
-let issues = [], tab = 'new';
-function field(body, name) { const m = (body || '').match(new RegExp('\\*\\*' + name + ':\\*\\*\\s*(.*)')); return m ? m[1].trim() : ''; }
-function weekOf(d) { const jan1 = new Date(d.getFullYear(), 0, 1); return Math.ceil(((d - jan1) / 864e5 + jan1.getDay() + 1) / 7); }
+
+// ---------------------------------------------------------------- GitHub
+let token = null; try { token = localStorage.getItem('workfor.token'); } catch (e) {}
+let me = null, canEdit = false;
+async function api(method, path, body) {
+  const h = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+  if (token) h.Authorization = 'Bearer ' + token;
+  if (body) h['Content-Type'] = 'application/json';
+  const r = await fetch('https://api.github.com' + path, { method, headers: h, body: body ? JSON.stringify(body) : undefined });
+  if (r.status === 204) return null;
+  if (!r.ok) {
+    if (method === 'DELETE' && r.status === 404) return null;
+    if (method === 'POST' && path.endsWith('/labels') && r.status === 422) return null;
+    if (r.status === 401) throw new Error('GitHub says the token is wrong or expired.');
+    if (r.status === 403) throw new Error('GitHub refused (no permission, or too many requests). Try again in a minute.');
+    throw new Error('GitHub error ' + r.status);
+  }
+  return r.json();
+}
+async function connect(t, remember) {
+  token = t;
+  try {
+    const repo = await api('GET', `/repos/${REPO}`); const u = await api('GET', '/user');
+    me = u.login; canEdit = !!(repo.permissions && (repo.permissions.push || repo.permissions.admin || repo.permissions.triage));
+    if (!canEdit) throw new Error(`@${me} can't edit ${REPO}.`);
+    if (remember) { try { localStorage.setItem('workfor.token', t); } catch (e) {} }
+    for (const [name, color] of LABELS) await api('POST', `/repos/${REPO}/labels`, { name, color });
+    toast(`Logged in as @${me}.`);
+  } catch (e) { token = null; me = null; canEdit = false; try { localStorage.removeItem('workfor.token'); } catch (_) {} toast(e.message); }
+  drawConn(); render();
+}
+function logout() { token = null; me = null; canEdit = false; try { localStorage.removeItem('workfor.token'); } catch (e) {} drawConn(); render(); toast('Logged out. The token was removed from this browser.'); }
+function drawConn() {
+  const b = $('#connBox');
+  if (canEdit) { b.innerHTML = `<p><span class="ok">✓ Logged in as @${esc(me)}</span> · you can hire, promote and fire.</p><div class="conn"><button class="b" id="logout">log out and forget the token</button></div>`; $('#logout').onclick = logout; return; }
+  b.innerHTML = `<p class="bad">Not logged in: you can look, but not change anything.</p><div class="conn"><input type="password" id="tok" placeholder="paste your GitHub token" autocomplete="off" spellcheck="false"><label style="font-size:13px"><input type="checkbox" id="rem" checked> remember on this device</label><button class="b dark" id="go">log in</button></div>`;
+  $('#go').onclick = () => { const t = $('#tok').value.trim(); if (t) connect(t, $('#rem').checked); };
+}
+
+// ---------------------------------------------------------------- data
+let issues = [], comments = {}, tab = 'employees', open = new Set(), confirmKey = null, busy = false;
+const field = (body, name) => { const m = (body || '').match(new RegExp('\\*\\*' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ':\\*\\*\\s*(.*)')); return m ? m[1].trim() : ''; };
+const has = (i, n) => i.labels.some(l => l.name.toLowerCase() === n.toLowerCase());
+const rankOf = i => { const l = i.labels.find(l => /^rank: /i.test(l.name)); const k = l ? RANKS.findIndex(r => 'rank: ' + r.toLowerCase() === l.name.toLowerCase()) : 0; return k < 0 ? 0 : k; };
+const ghOf = i => (field(i.body, 'GitHub').replace(/^@/, '') || i.user.login).toLowerCase();
+const isApp = i => /^Application:/i.test(i.title), isProg = i => /^Program:/i.test(i.title);
+const isEmp = i => isApp(i) && has(i, 'hired') && !has(i, 'fired');
+const isFired = i => isApp(i) && has(i, 'fired');
+const isNewApp = i => isApp(i) && i.state === 'open' && !has(i, 'hired') && !has(i, 'fired') && !has(i, 'rejected');
 async function load() {
   $('#list').innerHTML = '<div class="empty">Loading…</div>';
   try {
     let all = [];
-    for (let page = 1; page <= 5; page++) {
-      const r = await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&per_page=100&page=${page}`, { headers: { Accept: 'application/vnd.github+json' } });
-      if (!r.ok) throw new Error(r.status === 403 ? 'GitHub says slow down (too many refreshes). Try again in a few minutes.' : r.status === 404 ? 'The repo ' + REPO + ' was not found.' : 'GitHub error ' + r.status);
-      const got = await r.json(); all = all.concat(got.filter(i => !i.pull_request)); if (got.length < 100) break;
-    }
-    issues = all; render();
+    for (let p = 1; p <= 5; p++) { const got = await api('GET', `/repos/${REPO}/issues?state=all&per_page=100&page=${p}`); all = all.concat(got.filter(i => !i.pull_request)); if (got.length < 100) break; }
+    issues = all; comments = {};
+    render();
+    // fetch comment history for employees (hire dates, promotions)
+    await Promise.all(issues.filter(i => isApp(i) && (has(i, 'hired') || has(i, 'fired')) && i.comments > 0).slice(0, 40).map(async i => { try { comments[i.number] = await api('GET', `/repos/${REPO}/issues/${i.number}/comments?per_page=100`); } catch (e) {} }));
+    render();
   } catch (e) { $('#list').innerHTML = `<div class="empty">Couldn't load from GitHub: ${esc(e.message)}</div>`; }
 }
-function render() {
-  const apps = issues.filter(i => /^Application:/i.test(i.title)), progs = issues.filter(i => /^Program:/i.test(i.title));
-  const hired = apps.filter(i => i.labels.some(l => /hired/i.test(l.name)));
-  const isNew = i => i.state === 'open' && !i.labels.some(l => /hired/i.test(l.name));
-  const thisWeek = weekOf(new Date()), year = new Date().getFullYear();
-  const handedThisWeek = new Set(progs.filter(p => { const d = new Date(p.created_at); return d.getFullYear() === year && weekOf(d) === thisWeek; }).map(p => p.user.login.toLowerCase()));
-  const missing = hired.filter(a => !handedThisWeek.has((field(a.body, 'GitHub').replace(/^@/, '') || a.user.login).toLowerCase()));
-  $('#stats').innerHTML = [['new applications', apps.filter(isNew).length], ['hired', hired.length], ['programs handed in', progs.length], ['missing this week', missing.length]].map(([k, v]) => `<div class="stat"><small>${k}</small><b>${v}</b></div>`).join('');
-  const tabs = [['new', 'new'], ['hired', 'hired'], ['all', 'all applications'], ['programs', 'programs'], ['missing', 'missing this week']];
-  $('#tabs').innerHTML = ''; tabs.forEach(([k, l]) => { const b = document.createElement('button'); b.className = 'pill' + (tab === k ? ' on' : ''); b.textContent = l; b.onclick = () => { tab = k; render(); }; $('#tabs').appendChild(b); });
-  let list = tab === 'new' ? apps.filter(isNew) : tab === 'hired' ? hired : tab === 'all' ? apps : tab === 'programs' ? progs : missing;
-  if (!list.length) { $('#list').innerHTML = `<div class="empty">${tab === 'missing' ? 'Everyone hired has handed in a program this week. 🎉' : 'Nothing here yet.'}</div>`; return; }
-  $('#list').innerHTML = list.map(i => {
-    const st = i.labels.some(l => /hired/i.test(l.name)) ? '<span class="tag hired">hired</span>' : i.state === 'closed' ? '<span class="tag closed">closed</span>' : '<span class="tag new">new</span>';
-    const when = new Date(i.created_at).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
-    if (/^Program:/i.test(i.title)) {
-      const link = safeUrl(field(i.body, 'Program'));
-      return `<div class="app"><div class="hd"><h2>${esc(i.title)}</h2><span class="note">${esc(when)}</span></div><dl><dt>From</dt><dd>@${esc(i.user.login)}</dd><dt>Program</dt><dd>${link ? `<a href="${esc(link)}" target="_blank" rel="noopener nofollow">${esc(link)}</a>` : esc(field(i.body, 'Program'))}</dd><dt>What it does</dt><dd>${esc(field(i.body, 'What it does'))}</dd></dl><div class="acts"><a class="pill" href="${esc(i.html_url)}" target="_blank" rel="noopener">open on GitHub</a></div></div>`;
+function history(i) {
+  return (comments[i.number] || []).filter(c => /^\*\*(Hired|Promoted|Moved down|Fired|Rehired)/.test(c.body || '')).map(c => ({ when: c.created_at, what: (c.body.match(/^\*\*([^*]+)\*\*/) || [])[1] || '' }));
+}
+function hiredOn(i) { const h = history(i).filter(x => /^(Hired|Rehired)/.test(x.what)); return h.length ? h[h.length - 1].when : null; }
+function progsBy(gh) { return issues.filter(p => isProg(p) && (p.user.login.toLowerCase() === gh || field(p.body, 'From').replace(/^@/, '').toLowerCase() === gh)).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); }
+
+// ---------------------------------------------------------------- actions (need a token)
+async function act(i, kind) {
+  if (!canEdit) { toast('Log in with your GitHub token first (box above).'); return; }
+  if (busy) return;
+  const key = kind + i.number;
+  if ((kind === 'fire' || kind === 'reject') && confirmKey !== key) { confirmKey = key; render(); toast(`Press "${kind === 'fire' ? 'yes, fire' : 'yes, reject'}" to confirm.`); return; }
+  confirmKey = null; busy = true; render();
+  const n = i.number, nm = field(i.body, 'Name') || '@' + i.user.login, r = rankOf(i), base = `/repos/${REPO}/issues/${n}`;
+  const dropRank = async () => { for (const l of i.labels.filter(l => /^rank: /i.test(l.name))) await api('DELETE', `${base}/labels/${encodeURIComponent(l.name)}`); };
+  try {
+    if (kind === 'hire') {
+      await api('POST', `${base}/labels`, { labels: ['hired', 'rank: ' + RANKS[0]] });
+      await api('POST', `${base}/comments`, { body: `**Hired** as ${RANKS[0]}\n\nWelcome to kai.fun, ${nm}! 🎉 You start as a **${RANKS[0]}**.\n\nYour job: hand in **1 program every week**, any size, doing anything. Use the weekly form at https://workfor.kaifun.fun/#weekly.\n\nPay: -$0 a week, as promised.\n\n— kai.fun HR` });
+    } else if (kind === 'reject') {
+      await api('POST', `${base}/labels`, { labels: ['rejected'] });
+      await api('POST', `${base}/comments`, { body: `**Not hired**\n\nThanks for applying to kai.fun, ${nm}. It's a no for now, but you're welcome to apply again later.\n\n— kai.fun HR` });
+      await api('PATCH', base, { state: 'closed' });
+    } else if (kind === 'promote' || kind === 'demote') {
+      const nr = Math.max(0, Math.min(RANKS.length - 1, r + (kind === 'promote' ? 1 : -1))); if (nr === r) { busy = false; render(); return; }
+      await dropRank(); await api('POST', `${base}/labels`, { labels: ['rank: ' + RANKS[nr]] });
+      await api('POST', `${base}/comments`, { body: kind === 'promote' ? `**Promoted** to ${RANKS[nr]}\n\nCongratulations, ${nm}! 📈 You've been promoted from ${RANKS[r]} to **${RANKS[nr]}**. Your pay has gone up from -$0 to -$0.\n\n— kai.fun HR` : `**Moved down** to ${RANKS[nr]}\n\n${nm}, you've been moved from ${RANKS[r]} to **${RANKS[nr]}**. Keep handing in those programs and you'll be back up in no time.\n\n— kai.fun HR` });
+    } else if (kind === 'fire') {
+      await dropRank(); await api('DELETE', `${base}/labels/hired`); await api('POST', `${base}/labels`, { labels: ['fired'] });
+      await api('POST', `${base}/comments`, { body: `**Fired**\n\n${nm}, you've been let go from kai.fun. 📦 Thanks for the programs you made. You can fill out a new application any time at https://workfor.kaifun.fun.\n\n— kai.fun HR` });
+      await api('PATCH', base, { state: 'closed' });
+    } else if (kind === 'rehire') {
+      await api('DELETE', `${base}/labels/fired`); await api('DELETE', `${base}/labels/rejected`); await api('POST', `${base}/labels`, { labels: ['hired', 'rank: ' + RANKS[0]] });
+      await api('PATCH', base, { state: 'open' });
+      await api('POST', `${base}/comments`, { body: `**Rehired** as ${RANKS[0]}\n\nWelcome back, ${nm}! You're starting again as a **${RANKS[0]}**. One program a week, as before.\n\n— kai.fun HR` });
     }
-    const made = safeUrl(field(i.body, 'Something they made'));
-    const why = ((i.body || '').split('**Why they want to work for kai.fun:**')[1] || '').split('\n- [')[0].replace(/^\s*>\s?/gm, '').trim();
-    return `<div class="app"><div class="hd"><h2>${esc(field(i.body, 'Name') || i.title)} ${st}</h2><span class="note">${esc(when)} · sent by @${esc(i.user.login)}</span></div>
-      <dl><dt>Email</dt><dd>${esc(field(i.body, 'Email'))}</dd><dt>GitHub</dt><dd>${esc(field(i.body, 'GitHub'))}</dd><dt>Experience</dt><dd>${esc(field(i.body, 'Experience'))}</dd><dt>Programs in</dt><dd>${esc(field(i.body, 'Programs in'))}</dd>
-      <dt>Made</dt><dd>${made ? `<a href="${esc(made)}" target="_blank" rel="noopener nofollow">${esc(made)}</a>` : esc(field(i.body, 'Something they made'))}</dd><dt>First program</dt><dd>${esc(field(i.body, 'First program they\'d make'))}</dd></dl>
-      ${why ? `<blockquote>${esc(why)}</blockquote>` : ''}
-      <div class="acts"><a class="pill dark" href="${esc(i.html_url)}" target="_blank" rel="noopener">hire or reply on GitHub</a></div></div>`;
+    toast({ hire: `Hired ${nm}.`, reject: `Turned down ${nm}.`, promote: `Promoted ${nm}.`, demote: `Moved ${nm} down a rank.`, fire: `Fired ${nm}.`, rehire: `Rehired ${nm}.` }[kind] + ' GitHub has emailed them.');
+    busy = false; await load();
+  } catch (e) { busy = false; toast(e.message); render(); }
+}
+
+// ---------------------------------------------------------------- drawing
+function actions(i) {
+  const d = !canEdit || busy ? 'disabled' : '', btn = (k, label, cls = '') => `<button class="b ${cls}" data-act="${k}" data-n="${i.number}" ${d}>${label}</button>`;
+  const yes = k => confirmKey === k + i.number;
+  let h = '';
+  if (isNewApp(i)) h += btn('hire', 'hire', 'green') + btn('reject', yes('reject') ? 'yes, reject' : 'reject', yes('reject') ? 'red' : '');
+  if (isEmp(i)) { const r = rankOf(i); h += btn('promote', r < RANKS.length - 1 ? `promote to ${RANKS[r + 1]}` : 'top rank', 'green').replace(r >= RANKS.length - 1 ? '<button' : '<x', r >= RANKS.length - 1 ? '<button disabled' : '<x'); if (r > 0) h += btn('demote', `move down to ${RANKS[r - 1]}`); h += btn('fire', yes('fire') ? 'yes, fire' : 'fire', yes('fire') ? 'red' : ''); }
+  if (isFired(i) || (isApp(i) && has(i, 'rejected'))) h += btn('rehire', isFired(i) ? 'rehire' : 'hire after all', 'green');
+  h += `<a class="b" href="${esc(i.html_url)}" target="_blank" rel="noopener">open on GitHub</a>`;
+  return `<div class="acts">${h}</div>`;
+}
+function details(i) {
+  const made = safeUrl(field(i.body, 'Something they made'));
+  const why = ((i.body || '').split('**Why they want to work for kai.fun:**')[1] || '').split('\n- [')[0].replace(/^\s*>\s?/gm, '').trim();
+  const gh = ghOf(i), progs = progsBy(gh), hist = history(i);
+  return `<dl><dt>Name</dt><dd>${esc(field(i.body, 'Name'))}</dd><dt>Email</dt><dd>${esc(field(i.body, 'Email'))}</dd><dt>GitHub</dt><dd><a href="https://github.com/${esc(gh)}" target="_blank" rel="noopener nofollow">@${esc(gh)}</a></dd>
+    <dt>Experience</dt><dd>${esc(field(i.body, 'Experience'))}</dd><dt>Languages</dt><dd>${esc(field(i.body, 'Programs in'))}</dd>
+    <dt>Made</dt><dd>${made ? `<a href="${esc(made)}" target="_blank" rel="noopener nofollow">${esc(made)}</a>` : esc(field(i.body, 'Something they made'))}</dd>
+    <dt>First program</dt><dd>${esc(field(i.body, "First program they'd make"))}</dd><dt>Applied</dt><dd>${esc(fmtD(i.created_at))}</dd></dl>
+    ${why ? `<blockquote>${esc(why)}</blockquote>` : ''}
+    ${hist.length ? `<ul class="hist">${hist.map(h => `<li>${esc(fmtD(h.when))}: ${esc(h.what)}</li>`).join('')}</ul>` : ''}
+    ${progs.length ? `<p class="note" style="margin-top:8px"><b>Programs (${progs.length}):</b> ${progs.slice(0, 8).map(p => { const u = safeUrl(field(p.body, 'Program')); return u ? `<a href="${esc(u)}" target="_blank" rel="noopener nofollow">${esc(fmtD(p.created_at))}</a>` : esc(fmtD(p.created_at)); }).join(' · ')}</p>` : ''}`;
+}
+function render() {
+  const apps = issues.filter(isApp), emps = apps.filter(isEmp), fired = apps.filter(isFired), progs = issues.filter(isProg), news = apps.filter(isNewApp);
+  const wk = weekKey(new Date()), handed = new Set(progs.filter(p => weekKey(p.created_at) === wk).map(p => (field(p.body, 'From').replace(/^@/, '') || p.user.login).toLowerCase()));
+  const missing = emps.filter(e => !handed.has(ghOf(e)));
+  $('#stats').innerHTML = [['employees', emps.length], ['new applications', news.length], ['handed in this week', emps.length - missing.length], ['missing this week', missing.length], ['fired', fired.length]].map(([k, v]) => `<div class="stat"><small>${k}</small><b>${v}</b></div>`).join('');
+  const tabs = [['employees', `employees (${emps.length})`], ['new', `applications (${news.length})`], ['missing', `missing this week (${missing.length})`], ['programs', `programs (${progs.length})`], ['fired', `fired (${fired.length})`], ['all', 'everything']];
+  $('#tabs').innerHTML = tabs.map(([k, l]) => `<button class="b ${tab === k ? 'on' : ''}" data-tab="${k}">${l}</button>`).join('');
+  const L = $('#list');
+  if (tab === 'employees' || tab === 'missing') {
+    const list = (tab === 'missing' ? missing : emps).slice().sort((a, b) => rankOf(b) - rankOf(a) || (field(a.body, 'Name') || '').localeCompare(field(b.body, 'Name') || ''));
+    if (!list.length) { L.innerHTML = `<div class="empty">${tab === 'missing' ? 'Everyone has handed in a program this week. 🎉' : 'No employees yet. Hire someone from the "applications" tab.'}</div>`; return; }
+    L.innerHTML = `<div class="tablewrap"><table><thead><tr><th>Name</th><th>Rank</th><th class="hide-sm">GitHub</th><th class="hide-sm">Email</th><th class="hide-sm">Hired</th><th>Programs</th><th>This week</th></tr></thead><tbody>` + list.map(i => {
+      const gh = ghOf(i), pr = progsBy(gh), r = rankOf(i), o = open.has(i.number);
+      return `<tr class="emp" data-open="${i.number}"><td><b>${esc(field(i.body, 'Name') || '@' + gh)}</b></td><td><span class="rank r${r}">${esc(RANKS[r])}</span></td><td class="hide-sm">@${esc(gh)}</td><td class="hide-sm">${esc(field(i.body, 'Email'))}</td><td class="hide-sm">${esc(fmtD(hiredOn(i)) || '—')}</td><td>${pr.length}${pr[0] ? `<div class="note">last ${esc(fmtD(pr[0].created_at))}</div>` : ''}</td><td>${handed.has(gh) ? '<span class="wk-yes">✓ in</span>' : '<span class="wk-no">✗ missing</span>'}</td></tr>`
+        + (o ? `<tr class="more"><td colspan="7">${details(i)}${actions(i)}</td></tr>` : '');
+    }).join('') + '</tbody></table></div><p class="note" style="margin-top:8px">Click someone to see all their info, promote them, or fire them.</p>';
+    return;
+  }
+  const list = tab === 'new' ? news : tab === 'fired' ? fired : tab === 'programs' ? progs : issues;
+  if (!list.length) { L.innerHTML = '<div class="empty">Nothing here yet.</div>'; return; }
+  L.innerHTML = list.map(i => {
+    if (isProg(i)) { const u = safeUrl(field(i.body, 'Program')); return `<div class="card"><div class="hd"><h3>${esc(i.title)}</h3><span class="note">${esc(fmtD(i.created_at))}</span></div><dl><dt>From</dt><dd>@${esc(i.user.login)}</dd><dt>Program</dt><dd>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener nofollow">${esc(u)}</a>` : esc(field(i.body, 'Program'))}</dd><dt>What it does</dt><dd>${esc(field(i.body, 'What it does'))}</dd></dl><div class="acts"><a class="b" href="${esc(i.html_url)}" target="_blank" rel="noopener">open on GitHub</a></div></div>`; }
+    if (!isApp(i)) return `<div class="card"><h3>${esc(i.title)}</h3><div class="acts"><a class="b" href="${esc(i.html_url)}" target="_blank" rel="noopener">open on GitHub</a></div></div>`;
+    const st = isEmp(i) ? `<span class="rank r${rankOf(i)}">${esc(RANKS[rankOf(i)])}</span>` : isFired(i) ? '<span class="rank r4">FIRED</span>' : has(i, 'rejected') ? '<span class="rank">NOT HIRED</span>' : '<span class="rank r3">NEW</span>';
+    return `<div class="card"><div class="hd"><h3>${esc(field(i.body, 'Name') || i.title)} ${st}</h3><span class="note">applied ${esc(fmtD(i.created_at))} · @${esc(i.user.login)}</span></div>${details(i)}${actions(i)}</div>`;
   }).join('');
 }
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-tab]'); if (t) { tab = t.dataset.tab; confirmKey = null; render(); return; }
+  const a = e.target.closest('[data-act]'); if (a) { e.stopPropagation(); const i = issues.find(x => x.number === +a.dataset.n); if (i) act(i, a.dataset.act); return; }
+  const r = e.target.closest('tr[data-open]'); if (r) { const n = +r.dataset.open; open.has(n) ? open.delete(n) : open.add(n); render(); }
+});
 $('#reload').onclick = load;
-load();
+drawConn();
+(async () => { if (token) await connect(token, true); await load(); })();
 </script>
 </body>
 </html>
